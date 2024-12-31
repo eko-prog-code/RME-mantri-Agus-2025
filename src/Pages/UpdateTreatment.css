@@ -1,0 +1,137 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Container Styles */
+.UpdateTreatment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.UpdateTreatment-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.UpdateTreatment-link:hover {
+  text-decoration: underline;
+}
+
+.UpdateTreatment-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+/* Form Styles */
+/* UpdateTreatment.css */
+
+.UpdateTreatment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Jarak antar elemen form */
+}
+
+.UpdateTreatment-label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.UpdateTreatment-input {
+  width: 100%;
+  padding: 8px 12px; /* Padding input untuk membuat placeholder lebih rapi */
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Pastikan padding tidak menambah ukuran input */
+}
+
+.UpdateTreatment-input::placeholder {
+  color: #aaa; /* Warna placeholder */
+  font-style: italic; /* Style untuk membedakan placeholder */
+}
+
+.UpdateTreatment-button {
+  margin-top: 16px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.UpdateTreatment-button:hover {
+  background-color: #0056b3;
+}
+
+.UpdateTreatment-success-message {
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.unique-filtered-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.unique-filtered-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.unique-filtered-list li:hover {
+  background: #f4f4f4;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .UpdateTreatment-form {
+    grid-template-columns: 1fr;
+  }
+
+  .UpdateTreatment-container {
+    padding: 15px;
+  }
+
+  .UpdateTreatment-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .UpdateTreatment-link {
+    font-size: 0.9rem;
+  }
+
+  .UpdateTreatment-input {
+    font-size: 0.9rem;
+  }
+
+  .UpdateTreatment-button {
+    font-size: 0.9rem;
+  }
+}

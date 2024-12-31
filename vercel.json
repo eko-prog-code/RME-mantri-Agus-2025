@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/:path*"
+    }
+  ]
+}

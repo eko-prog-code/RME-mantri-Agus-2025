@@ -1,0 +1,189 @@
+.EditHistory-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.EditHistory-input-container {
+    margin-bottom: 20px;
+}
+
+.EditHistory-input-container input[type="date"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #4704c4;
+    margin-right: 10px;
+}
+
+.EditHistory-input-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.EditHistory-input-container button:hover {
+    background-color: #0056b3;
+}
+
+.EditHistory-patient-list {
+    list-style: none;
+    padding: 0;
+}
+
+.EditHistory-patient-item {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.EditHistory-patient-item div {
+    margin-bottom: 10px;
+}
+
+.EditHistory-patient-item div:last-child {
+    margin-bottom: 0;
+}
+
+.EditHistory-patient-item {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.edit-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.modal929 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content929 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.close-modal-button929 {
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.patient-cards-container929 {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.patient-card929 {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.patient-card-info929 {
+    flex-grow: 1;
+}
+
+.edit-patient-button929,
+.view-emr-button929 {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.edit-patient-button929:hover,
+.view-emr-button929:hover {
+    background-color: #0056b3;
+}
+
+.register-patient-button {
+    background-color: green;  /* Warna latar belakang hijau */
+    color: white;  /* Warna teks putih */
+    border: none;  /* Menghilangkan border */
+    padding: 10px 20px;  /* Padding dalam tombol */
+    border-radius: 5px;  /* Membuat sudut tombol melengkung */
+    font-size: 16px;  /* Ukuran font */
+    cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover */
+    transition: background-color 0.3s ease;  /* Transisi halus saat warna berubah */
+}
+
+.register-patient-button:hover {
+    background-color: darkgreen;  /* Warna tombol saat di-hover menjadi lebih gelap */
+}
+
+.add-patient-button {
+    background-color: #007bff;  /* Warna latar belakang biru */
+    color: white;  /* Warna teks putih */
+    border: none;  /* Menghilangkan border */
+    padding: 10px 20px;  /* Padding dalam tombol */
+    border-radius: 5px;  /* Membuat sudut tombol melengkung */
+    font-size: 16px;  /* Ukuran font */
+    cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover */
+    transition: background-color 0.3s ease;  /* Transisi halus saat warna berubah */
+    margin-right: 10px;  /* Menambahkan jarak antara tombol */
+}
+
+.add-patient-button:hover {
+    background-color: #0056b3;  /* Warna tombol saat di-hover menjadi lebih gelap */
+}
+
+.register-patient-button {
+    background-color: green;  /* Warna latar belakang hijau */
+    color: white;  /* Warna teks putih */
+    border: none;  /* Menghilangkan border */
+    padding: 10px 20px;  /* Padding dalam tombol */
+    border-radius: 5px;  /* Membuat sudut tombol melengkung */
+    font-size: 16px;  /* Ukuran font */
+    cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover */
+    transition: background-color 0.3s ease;  /* Transisi halus saat warna berubah */
+}
+
+.register-patient-button:hover {
+    background-color: darkgreen;  /* Warna tombol saat di-hover menjadi lebih gelap */
+}
+
+.EditHistory-patient-item p {
+    text-align: left;
+}

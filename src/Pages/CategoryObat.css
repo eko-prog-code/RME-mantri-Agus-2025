@@ -1,0 +1,60 @@
+/* Add this CSS to your stylesheet or style component */
+  /* Styling for the <h3> and <p> elements */
+  h3 {
+    font-size: 20px; /* Adjust the font size as needed for both PC and mobile */
+    margin: 10px 0; /* Add margin above and below the <h3> */
+  }
+  
+  p {
+    font-size: 16px; /* Adjust the font size as needed for both PC and mobile */
+    margin: 10px 0; /* Add margin above and below the <p> */
+  }
+  
+  /* Media query to adjust the layout for mobile and PC */
+  @media (max-width: 767px) {
+    h3, p {
+      margin: 5px 0; /* Reduce the margin for mobile for tighter spacing */
+    }
+  }
+  
+  /* Add this CSS to your stylesheet or style component */
+.category-obat {
+    display: flex;
+    flex-direction: column; /* Stack image groups vertically on PC */
+    align-items: center; /* Center align the image groups */
+    margin: 20px; /* Add margin as needed */
+  }
+  
+  .image-group {
+    display: flex;
+    justify-content: center; /* Center align images horizontally */
+    align-items: center; /* Center align images vertically */
+  
+    img {
+      max-width: 100%; /* Set maximum width to allow for responsive images */
+      height: auto; /* Allow the height to adjust proportionally */
+      margin: 5px; /* Add margin as needed */
+    }
+  }
+  
+  /* Media query for mobile screen */
+  @media (max-width: 767px) {
+    .image-group img {
+      max-width: 200px; /* Set a maximum width for mobile */
+      height: 60px; /* Set a fixed height for mobile */
+      margin: 6px; 
+    }
+  }
+  
+  /* Media query to adjust the layout for PC */
+  @media (min-width: 768px) {
+    .category-obat {
+      flex-direction: column; /* Display image groups in a column on PC */
+    }
+  
+    .image-group {
+      margin-top: 10px; /* Add margin between the two groups on PC */
+    }
+  }
+  
+  

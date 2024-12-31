@@ -1,0 +1,157 @@
+/* Container utama */
+.pediatric-drug {
+  font-family: 'Arial', sans-serif;
+  padding: 16px;
+  background-color: #f9fafb; /* Latar belakang yang lembut */
+}
+
+.pediatric-drug h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #1e3a8a;
+  margin-bottom: 16px;
+}
+
+/* Input pencarian dan berat badan */
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+
+/* Container untuk input dan tombol pencarian */
+.search {
+  display: flex;
+  flex-direction: column; /* Susun elemen vertikal */
+  align-items: center; /* Pusatkan horizontal */
+  justify-content: center; /* Pusatkan vertikal */
+  margin: 0 auto; /* Bawa ke tengah secara horizontal */
+  width: 100%; /* Lebar penuh */
+  max-width: 600px; /* Batasi lebar maksimum */
+  gap: 12px; /* Jarak antar elemen */
+}
+
+.search-input, .search-button {
+  width: 100%; /* Input dan button akan penuh lebar container */
+  padding: 12px;
+  box-sizing: border-box; /* Hitung padding ke dalam lebar */
+}
+
+
+/* Input pencarian */
+.search-input {
+  width: 90%; /* Responsif: Mengisi hampir seluruh lebar layar */
+  max-width: 600px; /* Batas maksimum untuk layar besar */
+  padding: 12px;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* Tombol pencarian */
+.search-button {
+  width: 90%;
+  max-width: 600px;
+  padding: 12px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-button:hover {
+  background-color: #2563eb;
+  transform: scale(1.03);
+}
+
+.search-button:active {
+  background-color: #1d4ed8;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+  .search-input, .search-button {
+    width: 100%; /* Lebar penuh pada layar kecil */
+  }
+}
+
+
+/* Card container */
+.card-container-drug {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.card {
+  width: 90%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-bottom: 8px;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card ul li {
+  font-size: 14px;
+  color: #4b5563;
+  padding: 4px 0;
+}
+
+/* Loading animation */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.loading-container img {
+  width: 100px;
+  height: 100px;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+  .search-input, .search-button {
+    width: 100%; /* Lebar penuh pada layar kecil */
+  }
+
+  .card {
+    width: 100%;
+  }
+}

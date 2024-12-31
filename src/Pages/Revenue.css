@@ -1,0 +1,153 @@
+.revenue-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.revenue-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-dropdown {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Wrapper for charts */
+.chart-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling */
+  }
+  
+  .chart-container {
+    min-width: 600px; /* You can adjust the min-width as per your chart's actual width */
+    /* Optional: To ensure the chart stays responsive */
+    width: 100%;
+  }
+  
+
+/* Patient List Styles */
+.patient-list {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.patient-list-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.patient-list-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.patient-list-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.patient-list-item:hover {
+    background-color: #e0f7fa;
+    border-color: #007bff;
+}
+
+.patient-name {
+    color: #007bff;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.treatment-cost {
+    color: #28a745;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.patient-list-item:hover .patient-name {
+    color: #0056b3;
+}
+
+.patient-list-item:hover .treatment-cost {
+    color: #218838;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .revenue-title {
+        font-size: 1.5rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-dropdown {
+        width: 100%;
+    }
+
+    .chart-wrapper {
+        margin: 10px 0;
+        padding: 15px;
+    }
+
+    .patient-list {
+        padding: 15px;
+    }
+
+    .patient-list-title {
+        font-size: 18px;
+    }
+
+    .patient-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .patient-name, .treatment-cost {
+        font-size: 14px;
+    }
+}
+
+.total-revenue {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  

@@ -1,0 +1,186 @@
+  
+  /* Main Wrapper */
+  .eduinfus-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading Styles */
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  h4 {
+    text-align: center;
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styles */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Label Styles */
+  label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1rem;
+  }
+  
+  /* Input Fields */
+  input, select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  /* Signature Canvas */
+  .signature-canvas {
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+  }
+  
+  button:hover {
+    background-color: #357ab7;
+  }
+  
+  /* Specific styles for the "Clear Signature" button */
+  .clear-signature-btn {
+    background-color: #e74c3c;  /* Red color */
+  }
+  
+  .clear-signature-btn:hover {
+    background-color: #c0392b;  /* Darker red on hover */
+  }
+  
+  
+/* Ensure table data cells are styled consistently */
+table td {
+    color: #2c3e50; /* Dark text for better contrast */
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Table header styling */
+  table th {
+    background-color: #3498db; /* Soft blue for header */
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Ensure any dynamic content in td elements follows the same styling */
+  table td strong {
+    color: #333; /* Dark color for strong text like labels */
+    font-weight: bold;
+  }
+  
+  /* Optional: If you want to wrap this content in a table and align it better */
+  .table-data {
+    color: #2c3e50;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  
+  /* Responsive Design for Mobile Devices */
+  @media (max-width: 768px) {
+    .eduinfus-container {
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    h4 {
+      font-size: 1rem;
+    }
+  
+    form {
+      gap: 10px;
+    }
+  
+    table {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+  
+    /* Wrapping Table in a Container for Mobile */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 20px;
+    }
+  
+    table th, table td {
+      padding: 8px;
+    }
+  
+    button {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Modal/Canvas responsiveness for smaller screens */
+  @media (max-width: 480px) {
+    .signature-canvas {
+      width: 100% !important;
+      height: 150px !important;
+    }
+    
+    input, select {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Kirim Penolakan Medis Button */
+.kirim-penolakan-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4a90e2; /* Blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Ensure the button remains blue even on hover */
+  .kirim-penolakan-btn:hover {
+    background-color: #4a90e2; /* No change in color on hover */
+  }
+  

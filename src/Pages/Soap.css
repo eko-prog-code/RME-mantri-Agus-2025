@@ -1,0 +1,127 @@
+/* Soap.css */
+.soap-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.soap-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.soap-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.soap-form label {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.soap-form input,
+.soap-form textarea,
+.soap-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.soap-form input[type="datetime-local"] {
+    padding: 8px;
+}
+
+.soap-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.soap-form button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.soap-form button:hover {
+    background-color: #0056b3;
+}
+
+.soap-form .toggle-form-button {
+    background-color: #28a745;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.soap-form .toggle-form-button:hover {
+    background-color: #218838;
+}
+
+.soap-notes-list {
+    margin-top: 20px;
+}
+
+/* Soap.css */
+.soap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.soap-table th,
+.soap-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.soap-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.soap-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.soap-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.soap-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.soap-details div {
+    margin-bottom: 5px;
+}
+
+.pasien {
+    margin-top: 14px;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: white;
+  }

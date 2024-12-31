@@ -1,0 +1,69 @@
+/* ConditionForm.css */
+
+.condition-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .back-button {
+    background-color: #2196F3;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .info-text {
+    margin: 10px 0;
+  }
+  
+  .participant-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Add media queries for mobile responsiveness */
+  @media (max-width: 768px) {
+    .condition-form-container {
+      padding: 10px;
+    }
+  
+    .back-button, .submit-button {
+      width: 100%;
+    }
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .glow-card {
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    border: 3px solid #2196F3;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #2196F3, 0 0 20px #2196F3, 0 0 40px #2196F3;
+  }
+  
+  .left-align-text {
+    text-align: left;
+  }
+  

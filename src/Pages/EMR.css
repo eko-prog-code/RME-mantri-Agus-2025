@@ -1,0 +1,756 @@
+/* EMR.css */
+
+.emr-container {
+  display: flex;
+}
+
+.EditBio-unix23288 {
+  cursor: pointer;
+  margin-left: 140px; /* Sesuaikan dengan jarak yang diinginkan */
+  max-width: 64px; /* Ukuran ikon */
+  height: auto;
+  margin-top: 260px;
+  position: relative; 
+}
+
+.biodata-pasien {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 50px;
+}
+
+.biodata-pasien h4 {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 200px; /* Menurunkan posisi h4 */
+  margin-bottom: 8px;
+}
+
+
+/* Pengaturan untuk elemen <p> di dalam biodata-card */
+.biodata-card p {
+  font-size: 14px; /* Ukuran font lebih besar untuk PC */
+  color: #333;
+  margin: 10px 0; /* Memberikan jarak vertikal antar <p> */
+  position: relative; /* Memungkinkan penggunaan properti top dan left */
+  top: 10px; /* Menggeser elemen ke bawah sejauh 240px */
+  left: 52px; /* Menggeser elemen ke kanan sejauh 70px */
+  display: block; /* Memastikan <p> berada di baris baru */
+  word-wrap: break-word; /* Memastikan teks panjang bisa wrap dengan baik */
+}
+
+
+
+/* Emosi Icon */
+.biodata-card .emotion-icon {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-icon {
+  margin-left: 64px;
+}
+
+/* Pengaturan untuk tombol purple */
+.purple-button {
+  position: relative; /* Memungkinkan penggunaan top dan left */
+  top: 10px; /* Menggeser tombol ke bawah sejauh 240px */
+  left: 146px; /* Menggeser tombol ke kanan sejauh 70px */
+  background-color: #6c63ff; /* Warna ungu */
+  color: white; /* Teks berwarna putih */
+  padding: 10px 20px; /* Padding agar tombol lebih besar */
+  border: none; /* Menghilangkan border default */
+  border-radius: 8px; /* Membulatkan sudut tombol */
+  font-size: 16px; /* Ukuran font */
+  cursor: pointer; /* Menambahkan cursor pointer saat hover */
+  transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna */
+}
+
+.purple-button:hover {
+  background-color: #5849c7; /* Warna lebih gelap saat hover */
+}
+
+/* Pengaturan untuk tombol red */
+.red-button {
+  position: relative; /* Memungkinkan penggunaan top dan left */
+  top: -8px; /* Menggeser tombol ke bawah sejauh 240px */
+  left: 146px; /* Menggeser tombol ke kanan sejauh 70px */
+  background-color: #ff4d4d; /* Warna merah */
+  color: white; /* Teks berwarna putih */
+  padding: 10px 20px; /* Padding agar tombol lebih besar */
+  border: none; /* Menghilangkan border default */
+  border-radius: 8px; /* Membulatkan sudut tombol */
+  font-size: 14px; /* Ukuran font */
+  cursor: pointer; /* Menambahkan cursor pointer saat hover */
+  transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna */
+}
+
+.red-button:hover {
+  background-color: #cc4040; /* Warna lebih gelap saat hover */
+}
+
+
+.button-wrapper {
+  margin-top: 20px; /* Sesuaikan dengan jumlah jarak yang Anda inginkan */
+}
+
+.purple-button:hover {
+  background-color: darkpurple;
+  cursor: pointer;
+}
+
+.patient-details {
+  flex: 44%;
+  width: 800px; /* Lebar diperbesar */
+  padding: 4px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2FBioData-Img.webp?alt=media&token=b045d883-95fe-4bce-a851-75a0bf9e3aaf');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 100%;
+  height: 1400px; /* Default height for desktop */
+  position: relative;
+  top: -40px; /* Naikkan posisi sebesar 100px */
+
+  /* Responsif untuk perangkat mobile */
+  @media (max-width: 767px) {
+    width: 90%; /* Sesuaikan lebar untuk mobile */
+    height: 520px; /* Tinggi untuk perangkat dengan lebar kurang dari 767px */
+    top: -20px; /* Naikkan posisi lebih sedikit untuk mobile */
+  }
+}
+
+/* Default style for h4 elements in patient details */
+.patient-details h4 {
+  font-size: 30px; /* Default font size for PC */
+  padding-left: 100px; /* Default padding for PC */
+  padding-top: 52px; /* Corrected padding-top for PC */
+}
+
+
+/* Default style for <p> elements in patient details */
+.patient-details p {
+  font-size: 22px; /* Default font size for PC */
+  padding-left: 100px; /* Padding default for PC */
+  padding-top: 6px; /* Adjusted top spacing */
+  padding-bottom: 3px; /* Adjusted bottom spacing */
+}
+
+/* Default style for h5 elements in patient details */
+.patient-details h5 {
+  font-size: 22px; /* Default font size for PC */
+  padding-left: 100px; /* Default padding for PC */
+}
+
+/* CSS for "Ubah Alergi" and "Ubah Riwayat Kesehatan" text */
+.patient-details h4.ubah-text {
+  font-size: 18px; /* Adjust the font size for PC */
+  padding-top: 20px; /* Adjust the padding-top for PC */
+}
+
+
+/* Default style for home-link */
+.home-link img {
+  width: 140px; /* Default size for PC */
+  height: auto;
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+  .home-link img {
+    width: 60px;
+  }
+}
+
+/* Adjust the size of the my-input placeholder text */
+.my-input::placeholder {
+  font-size: 24px; /* Placeholder text size */
+  max-width: 80%; /* Maximum width of the placeholder, adjust as needed */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.my-input {
+  width: 60%; /* Default width for PC */
+  height: 32px; /* Default height for PC */
+  max-width: 74%;
+  border-radius: 12px;
+  margin-left: 20px;
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+  .my-input {
+    width: 40%;
+    height: 14px;
+    max-width: 76%;
+    border: 2px solid #0077cc; /* Adjust the thickness as needed */
+  }
+}
+
+/* Media query for PC view */
+@media (min-width: 768px) {
+  .my-input {
+    margin-left: 70px;
+  }
+}
+
+/* CSS for Save button on PC view */
+.button-save {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+/* CSS for Save button on mobile devices */
+@media (max-width: 767px) {
+  .button-save {
+    width: 100%;
+  }
+}
+
+.tambah-button {
+  width: 240px;
+  height: 80px;
+}
+
+.treatments {
+  flex: 56%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  @media (max-width: 767px) {
+    width: 65%;
+  }
+}
+
+h2 {
+  text-align: center;
+}
+
+.patient-details p {
+  margin: 5px 0;
+  text-align: left;
+}
+
+.treatments a {
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+.treatments p {
+  margin: 5px 0;
+  text-align: left;
+}
+
+.treatment-card {
+  border: 2px solid #A2FF86;
+  box-shadow: #A2FF86;
+  border-radius: 30px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Default style for delete icon */
+.delete-icon {
+  width: 26px;
+  height: 26px;
+  background-color: red;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+  .delete-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* CSS to set the color of the "X" icon to white */
+.delete-icon svg {
+  color: white;
+}
+
+/* CSS for the "X" button next to text on PC view */
+.delete-icon-wrapper {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+/* CSS for the "X" button below text on mobile devices */
+@media (max-width: 767px) {
+  .delete-icon-wrapper {
+    display: block;
+    margin-top: 5px;
+  }
+}
+
+/* Mobile view (width <= 768px) */
+@media (max-width: 768px) {
+  .emr-container {
+    display: flex;
+  }
+
+  .patient-details {
+    width: 35%;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+     overflow-x: hidden;
+  }
+
+  .treatments {
+    width: 65%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+  }
+}
+
+
+/* Tambahkan ke file NewTreatment.css atau file CSS terpisah */
+
+.treatment-image {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.treatment-image:hover {
+  transform: scale(1.1);
+}
+
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.zoomed-image {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.allergies-label {
+    margin-top: 40px;
+    font-weight: bold; /* Membuat teks menjadi tebal */
+    color: red; /* Mengubah warna teks menjadi merah */
+}
+
+.health-history-label {
+  font-weight: bold; 
+  color: purple;
+}
+
+/* Tambahkan ini di file EMR.css atau dalam tag <style> */
+.fixed-bottom-left {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000; /* Pastikan ikon berada di atas elemen lainnya */
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+}
+
+.delete-treatment-icon {
+  position: absolute;
+  top: 20px;  /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 32px; /* Set appropriate size for the icon */
+  height: 42px;
+  cursor: pointer;
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+.delete-treatment-icon {
+  margin-top: 8px;
+    width: 24px; /* Size for mobile devices */
+    height: 36px; /* Size for mobile devices */
+}
+}
+
+.treatment-card {
+  position: relative;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+}
+
+/* EMR.css */
+
+/* Existing styles */
+
+.green-button {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.green-button:hover {
+  background-color: darkgreen;
+}
+
+.animated-payment-card {
+  position: relative;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.animated-payment-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 230, 150, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-circle 6s infinite ease-in-out;
+  z-index: 0;
+}
+
+.animated-payment-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  background: rgba(150, 230, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-circle 6s infinite ease-in-out 3s;
+  z-index: 0;
+}
+
+@keyframes pulse-circle {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  z-index: 2;
+  position: relative;
+}
+
+.card-content img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.card-content p {
+  font-size: 1.2rem;
+  color: #34495e;
+  margin: 0;
+}
+
+.tambah-pengobatan-img {
+  width: 280px;
+  height: 80px;
+  object-fit: contain;
+
+  /* Responsif untuk perangkat mobile */
+  @media (max-width: 767px) {
+    width: 120px; /* Ukuran lebih kecil untuk layar mobile */
+    height: 50px;
+  }
+}
+
+/* Media query untuk mobile devices */
+@media (max-width: 768px) {
+  /* Reset Styles */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  /* EMR Container */
+  .emr-container {
+    display: grid; /* Mengaktifkan grid layout */
+    grid-template-columns: 1fr; /* Membuat container menjadi satu kolom vertikal */
+    gap: 20px; /* Jarak antar elemen */
+    padding: 20px; /* Memberikan padding untuk konten */
+    color: #ffffff;
+  }
+
+  /* Pengaturan untuk kolom patient-details dan treatments */
+  .patient-details, .treatments {
+    width: 100%; /* Mengatur lebar kolom menjadi 100% */
+    margin: 0 auto; /* Memusatkan kolom */
+     overflow-x: hidden;
+  }
+  
+
+  /* Card Biodata Pasien */
+  .biodata-card {
+    position: relative;
+    top: 0; /* Menghilangkan pergeseran vertikal */
+    width: 100%; /* Membuat card lebar 100% pada mobile */
+    max-width: 500px; /* Membatasi lebar maksimal */
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid #007bff; /* Border biru */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Glow biru */
+    margin-top: 40px;
+  }
+
+  /* Mengatur posisi icon emosi */
+  .biodata-card .emotion-icon {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  /* Pengaturan untuk teks di dalam biodata */
+  .biodata-card p {
+    font-size: 14px; /* Ukuran font lebih kecil di mobile */
+    margin: 4px 0;
+    text-align: left;
+    margin-left: 0; /* Menghilangkan margin kiri yang terlalu besar */
+    font-size: 14px; /* Ukuran font lebih kecil di mobile */
+    margin: 4px 0;
+    position: relative;
+    left: 0; /* Menghilangkan pergeseran horizontal */
+    text-align: left;
+    margin-left: -100px;
+  }
+
+  /* Pengaturan tombol */
+  .purple-button,
+  .red-button {
+    position: relative;
+    top: 0; /* Menghilangkan pergeseran vertikal */
+    left: 0; /* Menghilangkan pergeseran horizontal */
+    font-size: 14px; /* Ukuran font lebih kecil */
+    padding: 8px 15px; /* Padding lebih kecil untuk mobile */
+  }
+
+  /* Button Tambah Pengobatan */
+  .tambah-button {
+    width: 120px;
+    height: 40px;
+    margin-top: 20px; /* Mengatur margin */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Treatment Card */
+  .treatment-card {
+    background: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Membuat card lebar 100% */
+    max-width: 500px; /* Membatasi lebar maksimal */
+    margin-left: auto; /* Memusatkan card */
+    margin-right: auto;
+    height: auto; /* Mengatur tinggi otomatis */
+    margin-top: 10px;
+  }
+
+  /* Mengatur gaya teks dalam card pengobatan */
+  .treatment-card p {
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 0;
+    color: #666;
+  }
+
+  /* Pengaturan untuk delete icon */
+  .delete-icon {
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .patient-details {
+  background-image: none;
+   overflow-x: hidden;
+  }
+  .EditBio-unix23288 {
+    text-align: left;
+    margin-left: -8px;
+    margin-top: -2px;
+  }
+  .treatment-history {
+    text-align: center;
+    z-index: 9999; /* Menetapkan z-index tertinggi */
+    text-align: center; /* Memusatkan teks secara horizontal */
+    font-size: 24px; /* Mengatur ukuran font sesuai kebutuhan */
+    padding: 10px;
+  }
+  
+  .title {
+    position: relative; /* Agar z-index bekerja */
+    z-index: 9999; /* Menetapkan z-index tertinggi */
+    text-align: center; /* Memusatkan teks secara horizontal */
+    font-size: 24px; /* Mengatur ukuran font sesuai kebutuhan */
+    padding: 20px;
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .fixed-bottom-left {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      width: 50px; /* Atur ulang ukuran untuk perangkat kecil */
+      height: 50px;
+  }
+}
+
+
+/* TabsStyles.css */
+
+/* Bungkus seluruh Tabs */
+.tabs-wrapper {
+    width: 100%;
+    margin-top: 0px; /* Margin atas */
+    overflow-x: hidden; /* Pastikan tidak ada scroll horizontal yang tidak diinginkan */
+}
+
+/* Styling default untuk Tabs */
+/* Wrapper untuk Tabs */
+.tabs-wrapper {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/* Styling Tabs Container */
+.responsive-tabs {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Styling untuk Setiap Tab */
+.responsive-tab {
+  font-family: 'Poppins', sans-serif;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.responsive-tab.Mui-selected {
+  color: #1e88e5; /* Warna biru saat tab dipilih */
+  font-weight: 600;
+}
+
+.responsive-tab:hover {
+  color: #1e88e5;
+  background-color: rgba(30, 136, 229, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Scroll Buttons Styling (Material UI) */
+.MuiTabs-scrollButtons {
+  color: #1e88e5; /* Warna scroll button */
+}
+
+.MuiTabs-scrollButtons.Mui-disabled {
+  opacity: 0.3;
+}
+
+/* Tambahkan Efek Hover pada Wrapper */
+.tabs-wrapper:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Responsif untuk Layar Kecil */
+@media (max-width: 768px) {
+  .responsive-tab {
+    font-size: 0.9rem;
+  }
+
+  .tabs-wrapper {
+    padding: 10px;
+  }
+}

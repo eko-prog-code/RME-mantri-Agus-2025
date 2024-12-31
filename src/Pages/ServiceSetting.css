@@ -1,0 +1,39 @@
+.service-setting-container {
+  max-width: 910px;
+  margin: 20px auto; /* Ubah margin top sesuai dengan referensi CSS */
+  border: 1px solid #ccc; /* Tambahkan border */
+  border-radius: 4px; /* Tambahkan border radius */
+  padding: 20px; /* Tambahkan padding */
+  margin-top: 20px;
+}
+
+.service-setting-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.service-option {
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+} 
+
+.button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #45a049;
+}

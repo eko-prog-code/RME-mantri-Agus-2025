@@ -1,0 +1,233 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.download-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .download-button:hover {
+    background-color: #45a049;
+  }
+  
+.signature-canvas {
+    border: 1px solid #ccc;
+    touch-action: none;
+}
+
+/* EduInfus.css */
+.eduinfus-container {
+    font-family: "Poppins", Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+  }
+  
+  h2, h3 {
+    color: #4CAF50; /* Hijau modern */
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  thead {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 12px 15px;
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f5f8;
+  }
+  
+  .download-button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+  }
+  
+  .download-button:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+  }
+  
+  img {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Responsif */
+  @media (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  
+    th, td {
+      font-size: 14px;
+    }
+  
+    .download-button {
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+  }
+  
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h4 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #555;
+    font-size: 16px;
+}
+
+input, select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #fff;
+    color: #333;
+    transition: border 0.3s ease;
+}
+
+input:focus, select:focus {
+    border: 1px solid #007BFF;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+.signature-canvas {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+    padding: 5px;
+    transition: border 0.3s ease;
+}
+
+.signature-canvas:hover {
+    border-color: #007BFF;
+}
+
+/* Button styles */
+button {
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+}
+
+button[type="button-acc"] {
+    background: linear-gradient(135deg, #ff4b5c, #ff3e3e);
+    color: white;
+}
+
+button[type="submit-acc"] {
+    background: linear-gradient(135deg, #4c8cff, #007BFF);
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+    .eduinfus-container {
+        padding: 15px;
+    }
+
+    h2, h3 {
+        font-size: 20px;
+    }
+
+    input, select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 10px;
+    }
+
+    .signature-canvas {
+        width: 100%;
+    }
+}

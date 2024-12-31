@@ -1,0 +1,183 @@
+/* PatientCard.css */
+/* PatientCard.css */
+
+/* Gaya dasar kartu */
+.patient-list {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  overflow: hidden; /* Mencegah elemen keluar dari kartu */
+}
+
+/* Untuk perangkat mobile */
+@media (max-width: 768px) {
+  body {
+      overflow-x: hidden; /* Hindari scroll horizontal pada body */
+  }
+
+  .patient-list {
+      margin: 10px; /* Memberikan margin kecil untuk kenyamanan */
+      display: flex;
+      flex-direction: column; /* Susunan vertikal */
+      gap: 10px;
+  }
+
+  .patient-info {
+      display: flex;
+      flex-direction: column; /* Informasi ditampilkan dalam satu kolom */
+      justify-content: flex-start;
+      align-items: flex-start;
+  }
+
+  .patient-info p {
+      font-size: 14px; /* Ukuran font yang nyaman di layar kecil */
+      margin-bottom: 5px;
+  }
+
+  .patient-actions {
+      display: flex;
+      flex-wrap: wrap; /* Mendukung tombol melanjutkan ke baris berikutnya jika ruang sempit */
+      gap: 10px;
+  }
+
+  .patient-actions button,
+  .patient-actions a > button {
+      width: 100%; /* Tombol memenuhi lebar layar */
+      font-size: 14px; /* Ukuran teks yang nyaman */
+      padding: 10px; /* Ruang tambahan untuk sentuhan */
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+  }
+
+  /* Scrollable content */
+  .patient-info,
+  .patient-actions {
+      overflow-x: auto; /* Scroll horizontal */
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch; /* Memperbaiki scrolling di iOS */
+  }
+}
+
+/* Gaya dasar untuk tombol */
+.common-button {
+width: 100%; /* Tombol memenuhi lebar container */
+max-width: 300px; /* Batas maksimal lebar */
+height: 40px;
+margin-bottom: 8px;
+border: none;
+border-radius: 5px;
+color: white;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+box-sizing: border-box; /* Pastikan padding tidak memengaruhi dimensi */
+}
+
+/* Warna tombol spesifik */
+.check-button {
+background-color: #bf00ff;
+}
+
+.check-button-checked {
+background-color: #25d366;
+}
+
+.emr-button {
+background-color: #007bff;
+}
+
+.delete-button {
+background-color: red;
+}
+
+/* Hover efek */
+.common-button:hover {
+opacity: 0.9;
+}
+
+/* Pastikan elemen Link tidak memengaruhi ukuran */
+.link-wrapper {
+width: 100%; /* Sama dengan tombol */
+display: flex; /* Mengikuti fleksibilitas tombol */
+justify-content: center; /* Pusatkan tombol di dalam Link */
+text-decoration: none; /* Hapus dekorasi */
+}
+
+/* Responsif untuk mobile */
+@media (max-width: 768px) {
+.button-container {
+  display: flex;
+  flex-direction: column; /* Susunan vertikal */
+  align-items: center; /* Pusatkan tombol */
+  width: 100%;
+}
+
+.common-button {
+  width: 80%; /* Lebar seragam pada mobile */
+}
+
+.link-wrapper {
+  width: 80%; /* Sama dengan tombol */
+}
+}
+
+
+
+.patient-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.patient-info p {
+  margin: 0;
+}
+
+.patient-actions button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.patient-actions button:hover {
+  background-color: #ff0000;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+
+.add-to-list-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #28a745; /* Hijau */
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-to-list-button:hover {
+  background-color: #218838; /* Warna hijau yang lebih gelap */
+  transform: scale(1.05); /* Efek zoom */
+}

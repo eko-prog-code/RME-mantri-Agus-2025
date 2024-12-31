@@ -1,0 +1,103 @@
+.ListBuy-container {
+  max-width: 920px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.ListBuy-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.ListBuy-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ListBuy-button-New {
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ListBuy-button:hover {
+  background-color: #45a049;
+}
+
+.ListBuy-form {
+  margin-top: 20px;
+}
+
+.ListBuy-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ListBuy-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #4caf50;
+  border-radius: 10px;
+}
+
+.ListBuy-list {
+  margin-top: 20px;
+}
+
+.ListBuy-subtitle {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.ListBuy-loading {
+  font-style: italic;
+}
+
+.ListBuy-ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ListBuy-li {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.ListBuy-whatsapp-form {
+  margin-top: 20px;
+}
+
+.ListBuy-item-container {
+  display: flex;
+  align-items: center;
+}
+
+.ListBuy-item-details {
+  flex-grow: 1;
+}
+
+.ListBuy-delete-button {
+  cursor: pointer;
+  color: red; /* warna merah */
+  font-weight: bold;
+}
+
+.ListBuy-delete-button:hover {
+  text-decoration: underline; /* tambahkan efek garis bawah saat hover */
+}

@@ -1,0 +1,158 @@
+/* SatuSehat.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #2196F3; /* Warna biru */
+    text-align: center;
+    font-size: 2em; /* Ukuran teks di PC */
+    margin-bottom: 20px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    h1 {
+      font-size: 1.5em; /* Ukuran teks pada perangkat mobile */
+    }
+  }
+
+  /* SatuSehat.css */
+
+/* Gaya untuk area filter tanggal */
+.date-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .datepicker {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 150px;
+  }
+  
+  .filter-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #2196F3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
+  }
+  
+  .filter-button:hover {
+    background-color: #1565C0; /* Warna biru yang lebih gelap saat hover */
+  }
+  
+  /* Menambahkan sedikit ruang antara placeholder dan tombol */
+  @media only screen and (max-width: 600px) {
+    .datepicker {
+      margin-right: 5px;
+    }
+  }
+  
+  
+  
+  label {
+    margin-right: 10px;
+  }
+  
+  /* input, button {
+    padding: 10px;
+    margin-right: 10px;
+  } */
+  
+  button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Patient card styles */
+  .patient-card-satu-sehat {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  .patient-card h2 {
+    color: #007bff;
+  }
+  
+  .medical-record {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .medical-record h3 {
+    color: #333;
+  }
+  
+  /* Responsive styles */
+  /* @media (max-width: 767px) {
+    input, button {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  } */
+  
+  /* SatuSehat.css */
+
+/* Tambahkan gaya untuk teks warna hitam */
+.generate-id-text {
+    color: #000;
+  }
+  
+  .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Sesuaikan tinggi header sesuai kebutuhan */
+}
+
+.header-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.satu-sehat-logo {
+  max-width: 100%; /* Logo akan responsif sesuai lebar layar */
+  height: auto; /* Menjaga aspek rasio logo */
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f5f5f5; /* Ganti dengan warna background yang diinginkan */
+}

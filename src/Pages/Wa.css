@@ -1,0 +1,159 @@
+.wa-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.wa-export-button {
+  background-color: #28a745; /* Hijau profesional */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  margin: 15px auto;
+  font-size: 16px;
+  border-radius: 5px;
+  display: block;
+  width: 90%;
+  max-width: 400px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.wa-export-button:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.wa-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wa-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  background-color: #fefefe;
+  font-size: 14px;
+  min-width: 800px;
+}
+
+.wa-data-table th,
+.wa-data-table td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  word-wrap: break-word;
+}
+
+.wa-data-table th {
+  background-color: #007bff; /* Biru profesional */
+  color: white;
+  text-align: left;
+  font-size: 14px;
+}
+
+.wa-data-table td {
+  background-color: #fff;
+  color: #333;
+}
+
+.wa-data-table tr:nth-child(even) td {
+  background-color: #f8f9fa; /* Warna latar alternatif */
+}
+
+.wa-date-input {
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  width: 90%;
+  max-width: 400px;
+  margin: 15px auto;
+  box-sizing: border-box;
+  display: block;
+  color: #333;
+}
+
+.wa-date-input::placeholder {
+  color: #6c757d;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.wa-date-input:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.wa-ttv-column {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #495057;
+}
+
+.wa-ttv-column p {
+  margin: 8px 0;
+}
+
+.wa-ttv-column .wa-ttv-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.wa-ttv-column .wa-ttv-data {
+  font-size: 14px;
+  color: #007bff;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wa-container {
+    padding: 15px;
+  }
+
+  .wa-export-button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .wa-data-table th,
+  .wa-data-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .wa-date-input {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .wa-ttv-column {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wa-data-table {
+    font-size: 12px;
+    min-width: 100%; /* Tabel lebih fleksibel di layar kecil */
+  }
+
+  .wa-export-button {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .wa-date-input {
+    width: 100%;
+  }
+}

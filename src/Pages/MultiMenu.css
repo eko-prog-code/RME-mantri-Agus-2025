@@ -1,0 +1,326 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 80%;
+  max-width: 1200px;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.button-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #ff4c4c; /* Merah */
+  color: white; /* Warna X menjadi putih */
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.button-close:hover {
+  background-color: #ff3333; /* Merah lebih gelap saat di-hover */
+}
+
+.input-modal {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 16px; /* 16px space below top */
+  margin-bottom: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 25px;
+}
+
+.delete-button {
+  background: #ff4c4c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.filtered-patients,
+.indexed-patients {
+  margin-top: 2rem;
+}
+
+.filtered-patients h2,
+.indexed-patients h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.patient-card {
+  background: #f8f9fa;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.patient-card:hover {
+  background: #e2e6ea;
+}
+
+.patient-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.patient-card button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.patient-card button:hover {
+  background: #0056b3;
+}
+
+.button-delete-all {
+  background-color: #ff4d4d; /* Red background for emphasis */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Add spacing to position it properly */
+}
+
+.button-delete-all:hover {
+  background-color: #e60000; /* Darker red on hover */
+}
+
+.button-delete-all:active {
+  background-color: #cc0000; /* Even darker red on active click */
+}
+
+.button-delete-all:disabled {
+  background-color: #ffcccc; /* Light red when disabled */
+  cursor: not-allowed;
+}
+
+/* Styling khusus untuk tampilan mobile */
+@media (max-width: 768px) {
+  .input-modal {
+    margin-left: -53px;
+  }
+
+  .input-modal::placeholder {
+    position: relative;
+    top: 80px; /* Turun 20px */
+    font-size: 16px; /* Ukuran tetap nyaman di layar kecil */
+  }
+  .modal-header {
+    margin-bottom: 60px;
+  }
+}
+
+
+/* Input pencarian pasien dalam modal */
+.input-modal {
+  width: 96%; /* Lebar input 90% agar lebih proporsional */
+  max-width: 500px; /* Batas maksimal lebar input */
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
+
+/* Tombol hapus semua antrian */
+.button-delete-all {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.button-delete-all:hover {
+  background-color: #e60000;
+}
+
+.button-delete-all:active {
+  background-color: #cc0000;
+}
+
+.button-delete-all:disabled {
+  background-color: #ffcccc;
+  cursor: not-allowed;
+}
+
+/* Bagian pasien yang difilter */
+.filtered-patients.multi-menu {
+  margin-top: 2rem;
+}
+
+.filtered-patients.multi-menu h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Bagian pasien yang terdaftar dalam antrian */
+.indexed-patients.multi-menu {
+  margin-top: 2rem;
+}
+
+.indexed-patients.multi-menu h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Kartu pasien */
+.patient-card {
+  background: #f8f9fa;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.patient-card:hover {
+  background: #e2e6ea;
+}
+
+.patient-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.patient-card button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.patient-card button:hover {
+  background: #0056b3;
+}
+
+/* Tombol buka modal */
+.button-open {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  height: 60px;
+  margin-top: 20px;
+}
+
+.button-open:hover {
+  background-color: #0056b3;
+}
+
+/* Default styling untuk input */
+.input-container {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.input-modal {
+  width: 100%;
+  padding: 10px; /* Default padding */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Placeholder styling */
+.input-modal::placeholder {
+  color: #aaa; /* Warna default placeholder */
+  font-size: 16px;
+}
+
+/* Styling khusus untuk tampilan mobile */
+@media (max-width: 768px) {
+  .input-modal {
+    padding-top: 30px; /* Tambahkan padding atas untuk membuat ruang bagi placeholder */
+    margin-left: 2px;
+  }
+
+  .input-modal::placeholder {
+    position: relative;
+    top: 6px; /* Turun 20px */
+    font-size: 16px; /* Ukuran tetap nyaman di layar kecil */
+  }
+}
+
+/* Styling khusus untuk tampilan mobile */
+/* Styling khusus untuk tampilan mobile */
+@media (max-width: 768px) {
+  .button-close {
+    position: absolute;
+    top: 16px;
+    right: calc(16px + -16px); /* Geser tombol 24px ke kanan */
+    background-color: #ff4c4c; /* Merah */
+    color: white; /* Warna X menjadi putih */
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+  }
+}
+
+
+
+
+

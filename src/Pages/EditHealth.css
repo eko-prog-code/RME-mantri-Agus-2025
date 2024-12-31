@@ -1,0 +1,57 @@
+/* Di dalam file CSS: */
+
+.edit-health-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+  }
+  
+  .edit-health-container h2 {
+    font-size: 24px;
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  .edit-health-container p {
+    font-size: 16px;
+    color: #495057;
+    margin-bottom: 10px;
+  }
+  
+  .edit-health-container .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .edit-health-container label {
+    font-size: 16px;
+    color: #495057;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .edit-health-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .edit-health-container button.save-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-health-container button.save-button:hover {
+    background-color: #0056b3;
+  }
+  
