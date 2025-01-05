@@ -43,6 +43,7 @@ const App = () => {
             path="/emr/:id/update-treatment/:treatmentId"
             element={<UpdateTreatment />}
           />
+           <Route path="/update-treatment/:id/:treatmentId" element={<UpdateTreatment />} />
           <Route path="/internis" element={<InternisDrug />} />
           <Route path="/satusehat" element={<SatuSehat />} />
           <Route path="/wa" element={<WaBlast />} />
