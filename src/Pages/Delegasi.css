@@ -340,7 +340,7 @@
   background: #7f8c8d;
 }
 
-/* Professional Letter Styles - RATA KIRI */
+/* Professional Letter Styles - DIPERBAIKI */
 .professional-letter {
   background: white;
   padding: 40px;
@@ -355,7 +355,6 @@
   margin-bottom: 30px;
   border-bottom: 2px solid #2c3e50;
   padding-bottom: 20px;
-  text-align: left;
 }
 
 .header-logos {
@@ -376,9 +375,10 @@
 }
 
 .right-logo {
-  margin-left: 48px;
+  margin-left: 20px;
 }
 
+/* HEADER CENTER - DIPERBAIKI */
 .header-center {
   flex: 1;
   text-align: center;
@@ -391,6 +391,8 @@
   margin: 0 0 8px 0;
   color: #2c3e50;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
 .header-center h3 {
@@ -398,6 +400,7 @@
   font-weight: bold;
   margin: 0 0 6px 0;
   color: #34495e;
+  text-align: center;
 }
 
 .header-center p {
@@ -405,6 +408,7 @@
   margin: 3px 0;
   color: #555;
   line-height: 1.4;
+  text-align: center;
 }
 
 .letter-title {
