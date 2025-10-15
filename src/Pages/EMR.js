@@ -34,6 +34,7 @@ const EMR = () => {
     else if (currentPath.includes("soap")) setValue(1);
     else if (currentPath.includes("cppt")) setValue(2);
     else if (currentPath.includes("education")) setValue(3);
+    else if (currentPath.includes("delegasi")) setValue(5);
     else setValue(undefined); // Tetap undefined jika tidak cocok
   }, []);
 
@@ -55,6 +56,9 @@ const EMR = () => {
       case 4:
         navigate(`/emr/${id}/refusal`);
         break;
+        case 5:
+      navigate(`/emr/${id}/delegasi`);
+      break;
       default:
         console.warn("Tab tidak valid");
     }
@@ -212,6 +216,7 @@ const EMR = () => {
                 label="Penolakan Tindakan Medis"
                 className="responsive-tab"
               />
+              <Tab label="Surat Delegasi" className="responsive-tab" />
             </Tabs>
           </div>
           <Link to={`/emr/${id}/tambah-pengobatan`}>

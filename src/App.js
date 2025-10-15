@@ -29,6 +29,7 @@ import EduSunat from "./Pages/EduSunat";
 import Refusal from "./Pages/Refusal";
 import DetailPayment from "./Pages/DetailPayment";
 import Revenue from "./Pages/Revenue";
+import Delegasi from "./Pages/Delegasi";
 
 const App = () => {
   return (
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="/emr/:id/eduInfus" element={<EduInfus />} />
           <Route path="/emr/:id/eduSunat" element={<EduSunat />} />
           <Route path="/emr/:id/refusal" element={<Refusal />} />
+          <Route path="/emr/:id/delegasi" element={<Delegasi />} /> 
           <Route
             path="/payment-detail/:id/:treatmentId"
             element={<DetailPayment />}
