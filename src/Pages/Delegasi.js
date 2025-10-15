@@ -464,34 +464,82 @@ const Delegasi = () => {
         </form>
       )}
 
-      {/* Saved Delegation Data */}
+      {/* Saved Delegation Data - TABLE STYLE */}
       <h3>Data Surat Pelimpahan Wewenang Tersimpan</h3>
       {savedDelegationData.length > 0 ? (
-        <div className="delegation-cards">
-          {savedDelegationData.map((data) => (
-            <div 
-              key={data.id} 
-              className={`delegation-card ${isDeleting === data.id ? 'deleting' : ''}`}
-            >
-              <div className="card-header">
-                <h4>Surat Pelimpahan Wewenang/ Mandat</h4>
-                <button 
-                  className="delete-btn"
-                  onClick={() => handleDeleteDelegation(data.id)}
-                  title="Hapus surat"
-                  disabled={isDeleting === data.id}
-                >
-                  {isDeleting === data.id ? '⏳' : '🗑️'}
-                </button>
-              </div>
-              <div className="card-content">
-                <div className="card-row">
-                  <span className="card-label">Nama Pasien:</span>
-                  <span className="card-value">{data.patientName}</span>
+        <>
+          {/* Desktop Table View */}
+          <div className="delegation-table-container">
+            <table className="delegation-table">
+              <thead>
+                <tr>
+                  <th>Nama Pasien</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {savedDelegationData.map((data) => (
+                  <tr key={data.id} className={isDeleting === data.id ? 'deleting' : ''}>
+                    <td className="col-patient">{data.patientName}</td>
+                    <td className="col-date">
+                      {new Date(data.dateTime).toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </td>
+                    <td className="col-time">
+                      {new Date(data.dateTime).toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </td>
+                    <td className="col-actions">
+                      <div className="table-actions">
+                        <button 
+                          className="view-table-btn"
+                          onClick={() => handleViewLetter(data)}
+                          disabled={isDeleting === data.id}
+                        >
+                          👁️ Lihat
+                        </button>
+                        <button 
+                          className="delete-table-btn"
+                          onClick={() => handleDeleteDelegation(data.id)}
+                          disabled={isDeleting === data.id}
+                        >
+                          {isDeleting === data.id ? '⏳' : '🗑️ Hapus'}
+                        </button>
+                      </div>
+                      {isDeleting === data.id && (
+                        <div className="deleting-overlay">
+                          <div className="deleting-spinner"></div>
+                          <span>Menghapus...</span>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="mobile-delegation-cards">
+            {savedDelegationData.map((data) => (
+              <div 
+                key={data.id} 
+                className={`mobile-delegation-card ${isDeleting === data.id ? 'deleting' : ''}`}
+              >
+                <div className="mobile-card-row">
+                  <span className="mobile-card-label">Nama Pasien:</span>
+                  <span className="mobile-card-value">{data.patientName}</span>
                 </div>
-                <div className="card-row">
-                  <span className="card-label">Tanggal:</span>
-                  <span className="card-value">
+                <div className="mobile-card-row">
+                  <span className="mobile-card-label">Tanggal:</span>
+                  <span className="mobile-card-value">
                     {new Date(data.dateTime).toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
@@ -499,37 +547,45 @@ const Delegasi = () => {
                     })}
                   </span>
                 </div>
-                <div className="card-row">
-                  <span className="card-label">Jam:</span>
-                  <span className="card-value">
+                <div className="mobile-card-row">
+                  <span className="mobile-card-label">Jam:</span>
+                  <span className="mobile-card-value">
                     {new Date(data.dateTime).toLocaleTimeString('id-ID', {
                       hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit'
+                      minute: '2-digit'
                     })}
                   </span>
                 </div>
-              </div>
-              <div className="card-actions">
-                <button 
-                  className="view-btn"
-                  onClick={() => handleViewLetter(data)}
-                  disabled={isDeleting === data.id}
-                >
-                  {isDeleting === data.id ? '⏳ Loading...' : '👁️ View Surat'}
-                </button>
-              </div>
-              {isDeleting === data.id && (
-                <div className="deleting-overlay">
-                  <div className="deleting-spinner"></div>
-                  <span>Menghapus...</span>
+                <div className="mobile-card-actions">
+                  <button 
+                    className="mobile-view-btn"
+                    onClick={() => handleViewLetter(data)}
+                    disabled={isDeleting === data.id}
+                  >
+                    👁️ Lihat Surat
+                  </button>
+                  <button 
+                    className="mobile-delete-btn"
+                    onClick={() => handleDeleteDelegation(data.id)}
+                    disabled={isDeleting === data.id}
+                  >
+                    {isDeleting === data.id ? '⏳' : '🗑️ Hapus'}
+                  </button>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
+                {isDeleting === data.id && (
+                  <div className="deleting-overlay">
+                    <div className="deleting-spinner"></div>
+                    <span>Menghapus...</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
       ) : (
-        <p className="no-data">Belum ada data surat pelimpahan wewenang.</p>
+        <div className="no-data-table">
+          Belum ada data surat pelimpahan wewenang.
+        </div>
       )}
 
       {/* Modal for Professional Letter View */}
