@@ -247,7 +247,7 @@ const Delegasi = () => {
 
       {/* Judul Surat */}
       <div className="letter-title">
-        <h2>SURAT PELIMPAHAN WEWENANG DELEGATIF</h2>
+        <h2>SURAT PELIMPAHAN WEWENANG DELEGATIF/ MANDAT</h2>
         <h3>KEPADA PERAWAT</h3>
       </div>
 
@@ -332,7 +332,7 @@ const Delegasi = () => {
 
   return (
     <div className="delegasi-container">
-      <h2>Surat Pelimpahan Wewenang Delegatif</h2>
+      <h2>Surat Pelimpahan Wewenang Delegatif/ Mandat </h2>
       
       {/* Dropdown Toggle */}
       <div className="dropdown-section">
@@ -474,7 +474,7 @@ const Delegasi = () => {
               className={`delegation-card ${isDeleting === data.id ? 'deleting' : ''}`}
             >
               <div className="card-header">
-                <h4>Surat Pelimpahan Wewenang</h4>
+                <h4>Surat Pelimpahan Wewenang/ Mandat</h4>
                 <button 
                   className="delete-btn"
                   onClick={() => handleDeleteDelegation(data.id)}
@@ -537,7 +537,7 @@ const Delegasi = () => {
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>Surat Pelimpahan Wewenang</h3>
+              <h3>Surat Pelimpahan Wewenang/ Mandat</h3>
               <button 
                 className="close-modal"
                 onClick={() => setShowModal(false)}
