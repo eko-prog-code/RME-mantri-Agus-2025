@@ -34,7 +34,7 @@ const Delegasi = () => {
   // Nurse information (hardcoded based on document)
   const nurseInfo = {
     name: "Agus Kostaman Achyar, S.Kep., Ners.C.Sk",
-    workplace: "Kp. Ciburial Rt 003 Rw 013 Desa Cibogo Lembang",
+    workplace: "Kp. Ciburial Rt 003 Rw 013 Desa Cibogo Kecamatan Lembang, Kabupaten Bandung Barat",
     position: "Perawat level 7 ( Ners )",
     licenseNumber: "446/8/SIPP.M/DPMPTSP/VI/2023",
     email: "aguscostaman@gmail.com",
