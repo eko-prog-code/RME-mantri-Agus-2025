@@ -23,6 +23,7 @@ const ExcelHarian = () => {
                 ([recordId, recordData]) => {
                   allRecords.push({
                     patient_name: patientData.name || "N/A",
+                    patient_address: patientData.patientAddress || "N/A",
                     patient_whatsapp: patientData.whatsappNumber || "N/A",
                     patient_birthdate: patientData.birthDate || "N/A",
                     ktp: patientData.identifier || "N/A",
@@ -73,13 +74,22 @@ const ExcelHarian = () => {
     // Flatten the records, separating the TTV data into its own columns
     const flattenedRecords = filteredRecords.map((record) => {
       return {
-        ...record,
-        systolicBloodPressure: record.ttv?.systolicBloodPressure || "N/A",
-        diastolicBloodPressure: record.ttv?.diastolicBloodPressure || "N/A",
-        heartRate: record.ttv?.heartRate || "N/A",
-        bodyTemperature: record.ttv?.bodyTemperature || "N/A",
-        respiratoryRate: record.ttv?.respiratoryRate || "N/A",
-        bodyWeight: record.ttv?.bodyWeight || "N/A",
+        "Nama Pasien": record.patient_name,
+        "Alamat": record.patient_address,
+        "No WhatsApp": record.patient_whatsapp,
+        "Tanggal Lahir": record.patient_birthdate,
+        "NIK": record.ktp,
+        "Diagnosa Medis": record.diagnosa_medis,
+        "Keluhan": record.keluhan,
+        "Pemeriksaan Fisik": record.pemeriksaan_fisik,
+        "TD Sistolik": record.ttv?.systolicBloodPressure || "N/A",
+        "TD Diastolik": record.ttv?.diastolicBloodPressure || "N/A",
+        "Nadi": record.ttv?.heartRate || "N/A",
+        "Suhu Badan": record.ttv?.bodyTemperature || "N/A",
+        "Respiratory Rate": record.ttv?.respiratoryRate || "N/A",
+        "Berat Badan": record.ttv?.bodyWeight || "N/A",
+        "Terapi Obat": record.terapi_obat,
+        "Timestamp": record.timestamp?.toLocaleString() || "N/A",
       };
     });
   
@@ -128,6 +138,7 @@ const ExcelHarian = () => {
             <tr>
               <th>No</th>
               <th>Nama Pasien</th>
+              <th>Alamat</th>
               <th>Diagnosa Medis</th>
               <th>Keluhan</th>
               <th>Pemeriksaan Fisik</th>
@@ -158,7 +169,8 @@ const ExcelHarian = () => {
                   <br />
                   <span>NIK: {record.ktp}</span>
                 </td>
-                <td>{record.diagnosa_medis}</td> {/* Kolom diperbaiki */}
+                <td>{record.patient_address}</td>
+                <td>{record.diagnosa_medis}</td>
                 <td>{record.keluhan}</td>
                 <td>{record.pemeriksaan_fisik}</td>
                 <td className="wa-ttv-column">
