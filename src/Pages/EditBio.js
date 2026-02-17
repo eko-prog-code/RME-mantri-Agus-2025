@@ -95,6 +95,7 @@ const EditBio = () => {
                         value={patientDetails.name}
                         onChange={handleInputChange}
                         placeholder="Masukkan nama lengkap"
+                        className="full-width-input"
                     />
                 </div>
                 
@@ -106,6 +107,7 @@ const EditBio = () => {
                             name="birthDate"
                             value={patientDetails.birthDate}
                             onChange={handleInputChange}
+                            className="full-width-input"
                         />
                     </div>
                     
@@ -117,6 +119,7 @@ const EditBio = () => {
                             value={patientDetails.identifier}
                             onChange={handleInputChange}
                             placeholder="Masukkan No KTP"
+                            className="full-width-input"
                         />
                     </div>
                 </div>
@@ -130,6 +133,7 @@ const EditBio = () => {
                             value={patientDetails.number_medical_records}
                             onChange={handleInputChange}
                             placeholder="Masukkan No RM"
+                            className="full-width-input"
                         />
                     </div>
                     
@@ -141,18 +145,20 @@ const EditBio = () => {
                             value={patientDetails.whatsappNumber}
                             onChange={handleInputChange}
                             placeholder="Contoh: 08123456789"
+                            className="full-width-input"
                         />
                     </div>
                 </div>
 
-                <div className="form-group full-width">
+                <div className="form-group address-group">
                     <label>Alamat:</label>
                     <textarea
                         name="patientAddress"
                         value={patientDetails.patientAddress}
                         onChange={handleInputChange}
-                        rows="4"
+                        rows="6"
                         placeholder="Masukkan alamat lengkap (Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi)"
+                        className="full-width-input address-textarea"
                     />
                 </div>
 
