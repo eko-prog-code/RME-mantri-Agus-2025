@@ -177,6 +177,7 @@ const EMR = () => {
               <p>Tanggal Lahir: {patientDetails.birthDate}</p>
               <p>No KTP: {patientDetails.identifier}</p>
               <p>No Rekam Medis: {patientDetails.number_medical_records}</p>
+              <p>Alamat: {patientDetails.patientAddress}</p>
               <p>No Wa: {patientDetails.whatsappNumber}</p>
 
               <p>Alergi: {allergies}</p>
