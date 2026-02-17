@@ -25,9 +25,9 @@ const Home = () => {
         birthDate: '',
         identifier: '',
         medicalRecordNumber: '',
+        patientAddress: '',
         whatsappNumber: '',
     });
-
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedYear, setSelectedYear] = useState('');
@@ -46,6 +46,7 @@ const Home = () => {
             birthDate: dayjs(selectedDate).format('YYYY-MM-DD'),
             identifier: newPatientData.identifier,
             number_medical_records: newPatientData.medicalRecordNumber,
+            patientAddress: newPatientData.patientAddress,
             whatsappNumber: newPatientData.whatsappNumber,
             timestamp: new Date().toISOString(), // Add timestamp field
         };
@@ -54,7 +55,14 @@ const Home = () => {
             .post('https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json', newPatient)
             .then((response) => {
                 console.log('Data pasien baru terkirim:', response.data);
-                setNewPatientData({ name: '', birthDate: '', identifier: '', number_medical_records: '', whatsappNumber: '', });
+                setNewPatientData({ 
+                    name: '', 
+                    birthDate: '', 
+                    identifier: '', 
+                    number_medical_records: '', 
+                    patientAddress: '',
+                    whatsappNumber: '' 
+                });
                 setSelectedDate(null);
                 setSelectedYear('');
                 closeModal();
@@ -238,13 +246,14 @@ const Home = () => {
 
             {isFormVisible && (
                 <div className="modal-background" onClick={closeModal}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal modal-large" onClick={(e) => e.stopPropagation()}>
                         <span className="close-button" onClick={closeModal}>
                             <FaTimes />
                         </span>
                         {isNewPatient ? (
                             <div className="modal-content">
-                                <div>
+                                <h3 className="modal-title">Tambah Pasien Baru</h3>
+                                <div className="form-scrollable">
                                     <input
                                         type="text"
                                         className="new-patient-input"
@@ -263,6 +272,7 @@ const Home = () => {
                                         value={newPatientData.name}
                                         onChange={(e) => setNewPatientData({ ...newPatientData, name: e.target.value })}
                                     />
+                                    
                                     <input
                                         type="text"
                                         className="new-patient-input"
@@ -271,11 +281,19 @@ const Home = () => {
                                         onChange={(e) => {
                                             const numericValue = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
                                             setNewPatientData({ ...newPatientData, medicalRecordNumber: numericValue });
-                                            // Update the correct field, change 'nik' to 'medicalRecordNumber'
                                         }}
                                     />
+                                    
+                                    <textarea
+                                        className="new-patient-input address-textarea"
+                                        placeholder="Alamat Lengkap Pasien (Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi)"
+                                        value={newPatientData.patientAddress}
+                                        onChange={(e) => setNewPatientData({ ...newPatientData, patientAddress: e.target.value })}
+                                        rows="4"
+                                    />
+                                    
                                     <input
-                                        type="tel" // Use type "tel" for numeric input
+                                        type="tel"
                                         className="new-patient-input"
                                         placeholder="Nomor WhatsApp"
                                         value={newPatientData.whatsappNumber}
@@ -285,9 +303,8 @@ const Home = () => {
                                         }}
                                     />
 
-
                                     <DatePicker
-                                        className="new-patient-input"
+                                        className="new-patient-input date-picker"
                                         selected={selectedDate}
                                         onChange={(date) => setSelectedDate(date)}
                                         dateFormat="dd/MM/yyyy"
@@ -306,6 +323,7 @@ const Home = () => {
                             </div>
                         ) : (
                             <div className="modal-content">
+                                <h3 className="modal-title">Cari Pasien Lama</h3>
                                 <input
                                     type="text"
                                     className="search-input"
