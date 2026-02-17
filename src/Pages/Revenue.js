@@ -29,6 +29,7 @@ const Revenue = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [debug, setDebug] = useState({ totalRecords: 0, recordsWithDate: 0 });
 
   function convertToNumeric(cost) {
     if (typeof cost === "number") return cost;
@@ -57,24 +58,64 @@ const Revenue = () => {
   useEffect(() => {
     const generateChartData = () => {
       const monthlyIncome = Array(12).fill(0);
+      let totalRecords = 0;
+      let recordsWithDate = 0;
 
       patients.forEach((patient) => {
         if (patient?.medical_records) {
           Object.values(patient.medical_records).forEach((record) => {
-            const date = record?.Encounter_period_start
+            totalRecords++;
+            
+            // PRIORITAS 1: Coba ambil dari Encounter_period_start
+            let date = record?.Encounter_period_start
               ? new Date(record.Encounter_period_start)
               : null;
-            if (date) {
+            
+            // PRIORITAS 2: Jika tidak ada, coba ambil dari timestamp
+            if (!date || isNaN(date.getTime())) {
+              date = record?.timestamp ? new Date(record.timestamp) : null;
+            }
+            
+            if (date && !isNaN(date.getTime())) {
+              recordsWithDate++;
               const year = date.getFullYear();
               const month = date.getMonth();
-              const cost = convertToNumeric(record?.treatmentCost);
+              
+              // Coba ambil treatmentCost dari berbagai kemungkinan field
+              let cost = 0;
+              if (record?.treatmentCost) {
+                cost = convertToNumeric(record.treatmentCost);
+              } else if (record?.biaya) {
+                cost = convertToNumeric(record.biaya);
+              } else if (record?.cost) {
+                cost = convertToNumeric(record.cost);
+              }
+              
               if (year === parseInt(selectedYear, 10)) {
                 monthlyIncome[month] += cost;
+                
+                // Debug untuk Januari
+                if (month === 0) { // Januari
+                  console.log("Januari record:", {
+                    patient: patient.name,
+                    date: date.toString(),
+                    cost: cost,
+                    record: record
+                  });
+                }
               }
             }
           });
         }
       });
+
+      setDebug({
+        totalRecords,
+        recordsWithDate
+      });
+
+      console.log("Monthly Income:", monthlyIncome);
+      console.log(`Total Records: ${totalRecords}, With Date: ${recordsWithDate}`);
 
       setChartData({
         labels: [
@@ -103,7 +144,9 @@ const Revenue = () => {
       });
     };
 
-    generateChartData();
+    if (patients.length > 0) {
+      generateChartData();
+    }
   }, [patients, selectedYear]);
 
   const handleChangeYear = (e) => {
@@ -120,11 +163,17 @@ const Revenue = () => {
         return (
           selectedMonth &&
           Object.values(patient?.medical_records || {}).some((record) => {
-            const date = record?.Encounter_period_start
+            // Coba ambil date dari Encounter_period_start atau timestamp
+            let date = record?.Encounter_period_start
               ? new Date(record.Encounter_period_start)
               : null;
+            if (!date || isNaN(date.getTime())) {
+              date = record?.timestamp ? new Date(record.timestamp) : null;
+            }
+            
             return (
               date &&
+              !isNaN(date.getTime()) &&
               date.getFullYear() === parseInt(selectedYear, 10) &&
               date.getMonth() === parseInt(selectedMonth, 10)
             );
@@ -136,15 +185,28 @@ const Revenue = () => {
           Name: patient.name || "Unknown",
           TreatmentCost: Object.values(patient?.medical_records || {}).reduce(
             (acc, record) => {
-              const date = record?.Encounter_period_start
+              let date = record?.Encounter_period_start
                 ? new Date(record.Encounter_period_start)
                 : null;
+              if (!date || isNaN(date.getTime())) {
+                date = record?.timestamp ? new Date(record.timestamp) : null;
+              }
+              
               if (
                 date &&
+                !isNaN(date.getTime()) &&
                 date.getFullYear() === parseInt(selectedYear, 10) &&
                 date.getMonth() === parseInt(selectedMonth, 10)
               ) {
-                return acc + convertToNumeric(record?.treatmentCost);
+                let cost = 0;
+                if (record?.treatmentCost) {
+                  cost = convertToNumeric(record.treatmentCost);
+                } else if (record?.biaya) {
+                  cost = convertToNumeric(record.biaya);
+                } else if (record?.cost) {
+                  cost = convertToNumeric(record.cost);
+                }
+                return acc + cost;
               }
               return acc;
             },
@@ -166,7 +228,8 @@ const Revenue = () => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Revenue");
 
-    const fileName = `Rekap_${chartData.labels[selectedMonth]}_${selectedYear}_revenue.xlsx`;
+    const monthName = selectedMonth ? chartData.labels[selectedMonth] : "All";
+    const fileName = `Rekap_${monthName}_${selectedYear}_revenue.xlsx`;
     XLSX.writeFile(workbook, fileName);
   };
 
@@ -174,11 +237,16 @@ const Revenue = () => {
     return (
       selectedMonth &&
       Object.values(patient?.medical_records || {}).some((record) => {
-        const date = record?.Encounter_period_start
+        let date = record?.Encounter_period_start
           ? new Date(record.Encounter_period_start)
           : null;
+        if (!date || isNaN(date.getTime())) {
+          date = record?.timestamp ? new Date(record.timestamp) : null;
+        }
+        
         return (
           date &&
+          !isNaN(date.getTime()) &&
           date.getFullYear() === parseInt(selectedYear, 10) &&
           date.getMonth() === parseInt(selectedMonth, 10)
         );
@@ -191,15 +259,28 @@ const Revenue = () => {
       acc +
       Object.values(patient?.medical_records || {}).reduce(
         (accInner, record) => {
-          const date = record?.Encounter_period_start
+          let date = record?.Encounter_period_start
             ? new Date(record.Encounter_period_start)
             : null;
+          if (!date || isNaN(date.getTime())) {
+            date = record?.timestamp ? new Date(record.timestamp) : null;
+          }
+          
           if (
             date &&
+            !isNaN(date.getTime()) &&
             date.getFullYear() === parseInt(selectedYear, 10) &&
             date.getMonth() === parseInt(selectedMonth, 10)
           ) {
-            return accInner + convertToNumeric(record?.treatmentCost);
+            let cost = 0;
+            if (record?.treatmentCost) {
+              cost = convertToNumeric(record.treatmentCost);
+            } else if (record?.biaya) {
+              cost = convertToNumeric(record.biaya);
+            } else if (record?.cost) {
+              cost = convertToNumeric(record.cost);
+            }
+            return accInner + cost;
           }
           return accInner;
         },
@@ -217,7 +298,15 @@ const Revenue = () => {
   return (
     <div className="revenue-container">
       <h1 className="revenue-title">Revenue Dashboard</h1>
-      <p style={{textAlign: "center", fontStyle: "italic", fontSize: "14px"}}>Penghasilan FASKES <br /> Mantri Agus Kostaman Achyar, S.Kep., Ners.C.SK</p>
+      <p style={{textAlign: "center", fontStyle: "italic", fontSize: "14px"}}>
+        Penghasilan FASKES <br /> Mantri Agus Kostaman Achyar, S.Kep., Ners.C.SK
+      </p>
+      
+      {/* Debug Info - Bisa dihapus setelah masalah selesai */}
+      <div style={{textAlign: "center", fontSize: "12px", color: "#666", marginBottom: "10px"}}>
+        Total Records: {debug.totalRecords} | Records with Date: {debug.recordsWithDate}
+      </div>
+      
       <div className="filters">
         <label>
           Select Year:
@@ -235,14 +324,18 @@ const Revenue = () => {
       </div>
       <div className="chart-wrapper">
         <div className="chart-container">
-          <Bar data={chartData} options={{ responsive: true }} />
+          {chartData.datasets ? (
+            <Bar data={chartData} options={{ responsive: true }} />
+          ) : (
+            <p>No data available for chart</p>
+          )}
         </div>
       </div>
 
       <div className="patient-list">
         <h2>
           Patient Details for {selectedYear}{" "}
-          {selectedMonth !== "" ? chartData.labels[selectedMonth] : ""}
+          {selectedMonth !== "" ? chartData.labels?.[selectedMonth] : ""}
         </h2>
         <div className="filters">
           <label>
@@ -267,37 +360,54 @@ const Revenue = () => {
           })}
         </p>
         <ul className="patient-list-ul">
-          {filteredPatients.map((patient) => (
-            <li key={patient.id} className="patient-list-item">
-              <span className="patient-name">Name:</span>
-              <p style={{ color: "blue", fontSize: "14px" }}>
-                {patient.name || "Unknown"}
-              </p>
-              <span className="treatment-cost">
-                <strong>Fee:</strong>{" "}
-                {Object.values(patient?.medical_records || {})
-                  .reduce((acc, record) => {
-                    const date = record?.Encounter_period_start
-                      ? new Date(record.Encounter_period_start)
-                      : null;
-                    if (
-                      date &&
-                      date.getFullYear() === parseInt(selectedYear, 10) &&
-                      date.getMonth() === parseInt(selectedMonth, 10)
-                    ) {
-                      return (
-                        acc + convertToNumeric(record?.treatmentCost || "0")
-                      );
-                    }
-                    return acc;
-                  }, 0)
-                  .toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  })}
-              </span>
-            </li>
-          ))}
+          {filteredPatients.length > 0 ? (
+            filteredPatients.map((patient, index) => (
+              <li key={index} className="patient-list-item">
+                <span className="patient-name">Name:</span>
+                <p style={{ color: "blue", fontSize: "14px" }}>
+                  {patient.name || "Unknown"}
+                </p>
+                <span className="treatment-cost">
+                  <strong>Fee:</strong>{" "}
+                  {Object.values(patient?.medical_records || {})
+                    .reduce((acc, record) => {
+                      let date = record?.Encounter_period_start
+                        ? new Date(record.Encounter_period_start)
+                        : null;
+                      if (!date || isNaN(date.getTime())) {
+                        date = record?.timestamp ? new Date(record.timestamp) : null;
+                      }
+                      
+                      if (
+                        date &&
+                        !isNaN(date.getTime()) &&
+                        date.getFullYear() === parseInt(selectedYear, 10) &&
+                        date.getMonth() === parseInt(selectedMonth, 10)
+                      ) {
+                        let cost = 0;
+                        if (record?.treatmentCost) {
+                          cost = convertToNumeric(record.treatmentCost);
+                        } else if (record?.biaya) {
+                          cost = convertToNumeric(record.biaya);
+                        } else if (record?.cost) {
+                          cost = convertToNumeric(record.cost);
+                        }
+                        return acc + cost;
+                      }
+                      return acc;
+                    }, 0)
+                    .toLocaleString("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })}
+                </span>
+              </li>
+            ))
+          ) : (
+            <p style={{textAlign: "center", color: "#999"}}>
+              No data for selected month
+            </p>
+          )}
         </ul>
       </div>
     </div>
