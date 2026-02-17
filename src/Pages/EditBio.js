@@ -11,6 +11,7 @@ const EditBio = () => {
         birthDate: '',
         identifier: '',
         number_medical_records: '',
+        patientAddress: '',
         whatsappNumber: ''
     });
 
@@ -25,6 +26,7 @@ const EditBio = () => {
                         birthDate: response.data.birthDate || '',
                         identifier: response.data.identifier || '',
                         number_medical_records: response.data.number_medical_records || '',
+                        patientAddress: response.data.patientAddress || '',
                         whatsappNumber: response.data.whatsappNumber || ''
                     });
                 }
@@ -61,6 +63,7 @@ const EditBio = () => {
                     birthDate: patientDetails.birthDate,
                     identifier: patientDetails.identifier,
                     number_medical_records: patientDetails.number_medical_records,
+                    patientAddress: patientDetails.patientAddress,
                     whatsappNumber: patientDetails.whatsappNumber
                 };
 
@@ -117,6 +120,15 @@ const EditBio = () => {
                     name="number_medical_records"
                     value={patientDetails.number_medical_records}
                     onChange={handleInputChange}
+                />
+            </div>
+            <div className="form-group">
+                <label>Alamat:</label>
+                <textarea
+                    name="patientAddress"
+                    value={patientDetails.patientAddress}
+                    onChange={handleInputChange}
+                    rows="3"
                 />
             </div>
             <div className="form-group">
