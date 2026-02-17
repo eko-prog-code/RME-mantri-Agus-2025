@@ -200,7 +200,7 @@ const Home = () => {
                     alt="Service Setting"
                     className="image-button-ServiceSetting"
                     onClick={() => window.open('https://medic-tech-plus.vercel.app/', '_blank')}
-                    style={{ cursor: 'pointer' }} // Optional: Menambah tampilan kursor
+                    style={{ cursor: 'pointer' }}
                 />
             </div>
 
@@ -246,21 +246,20 @@ const Home = () => {
 
             {isFormVisible && (
                 <div className="modal-background" onClick={closeModal}>
-                    <div className="modal modal-large" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <span className="close-button" onClick={closeModal}>
                             <FaTimes />
                         </span>
                         {isNewPatient ? (
                             <div className="modal-content">
-                                <h3 className="modal-title">Tambah Pasien Baru</h3>
-                                <div className="form-scrollable">
+                                <div>
                                     <input
                                         type="text"
                                         className="new-patient-input"
                                         placeholder="NIK Pasien Baru"
                                         value={newPatientData.identifier}
                                         onChange={(e) => {
-                                            const numericValue = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                                            const numericValue = e.target.value.replace(/\D/g, '');
                                             setNewPatientData({ ...newPatientData, identifier: numericValue });
                                         }}
                                     />
@@ -279,17 +278,18 @@ const Home = () => {
                                         placeholder="Nomor Rekam Medis"
                                         value={newPatientData.medicalRecordNumber}
                                         onChange={(e) => {
-                                            const numericValue = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                                            const numericValue = e.target.value.replace(/\D/g, '');
                                             setNewPatientData({ ...newPatientData, medicalRecordNumber: numericValue });
                                         }}
                                     />
                                     
-                                    <textarea
-                                        className="new-patient-input address-textarea"
-                                        placeholder="Alamat Lengkap Pasien (Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi)"
+                                    {/* Form Alamat dengan style sama persis dengan input nama */}
+                                    <input
+                                        type="text"
+                                        className="new-patient-input"
+                                        placeholder="Alamat Pasien"
                                         value={newPatientData.patientAddress}
                                         onChange={(e) => setNewPatientData({ ...newPatientData, patientAddress: e.target.value })}
-                                        rows="4"
                                     />
                                     
                                     <input
@@ -298,13 +298,13 @@ const Home = () => {
                                         placeholder="Nomor WhatsApp"
                                         value={newPatientData.whatsappNumber}
                                         onChange={(e) => {
-                                            const numericValue = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                                            const numericValue = e.target.value.replace(/\D/g, '');
                                             setNewPatientData({ ...newPatientData, whatsappNumber: numericValue });
                                         }}
                                     />
 
                                     <DatePicker
-                                        className="new-patient-input date-picker"
+                                        className="new-patient-input"
                                         selected={selectedDate}
                                         onChange={(date) => setSelectedDate(date)}
                                         dateFormat="dd/MM/yyyy"
@@ -323,7 +323,6 @@ const Home = () => {
                             </div>
                         ) : (
                             <div className="modal-content">
-                                <h3 className="modal-title">Cari Pasien Lama</h3>
                                 <input
                                     type="text"
                                     className="search-input"
