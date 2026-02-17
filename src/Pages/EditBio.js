@@ -86,63 +86,88 @@ const EditBio = () => {
     return (
         <div className="edit-bio-container">
             <h2>Edit Biodata Pasien</h2>
-            <div className="form-group">
-                <label>Nama:</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={patientDetails.name}
-                    onChange={handleInputChange}
-                />
+            <div className="form-container">
+                <div className="form-group">
+                    <label>Nama:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={patientDetails.name}
+                        onChange={handleInputChange}
+                        placeholder="Masukkan nama lengkap"
+                    />
+                </div>
+                
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Tanggal Lahir:</label>
+                        <input
+                            type="date"
+                            name="birthDate"
+                            value={patientDetails.birthDate}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label>No KTP:</label>
+                        <input
+                            type="text"
+                            name="identifier"
+                            value={patientDetails.identifier}
+                            onChange={handleInputChange}
+                            placeholder="Masukkan No KTP"
+                        />
+                    </div>
+                </div>
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>No Rekam Medis:</label>
+                        <input
+                            type="text"
+                            name="number_medical_records"
+                            value={patientDetails.number_medical_records}
+                            onChange={handleInputChange}
+                            placeholder="Masukkan No RM"
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label>No Whatsapp:</label>
+                        <input
+                            type="text"
+                            name="whatsappNumber"
+                            value={patientDetails.whatsappNumber}
+                            onChange={handleInputChange}
+                            placeholder="Contoh: 08123456789"
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group full-width">
+                    <label>Alamat:</label>
+                    <textarea
+                        name="patientAddress"
+                        value={patientDetails.patientAddress}
+                        onChange={handleInputChange}
+                        rows="4"
+                        placeholder="Masukkan alamat lengkap (Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi)"
+                    />
+                </div>
+
+                <div className="button-group">
+                    <button className="save-button" onClick={savePatientDetails}>
+                        Simpan Perubahan
+                    </button>
+                    <button 
+                        className="cancel-button" 
+                        onClick={() => window.location.href = `/emr/${id}`}
+                    >
+                        Batal
+                    </button>
+                </div>
             </div>
-            <div className="form-group">
-                <label>Tanggal Lahir:</label>
-                <input
-                    type="date"
-                    name="birthDate"
-                    value={patientDetails.birthDate}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="form-group">
-                <label>No KTP:</label>
-                <input
-                    type="text"
-                    name="identifier"
-                    value={patientDetails.identifier}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="form-group">
-                <label>No Rekam Medis:</label>
-                <input
-                    type="text"
-                    name="number_medical_records"
-                    value={patientDetails.number_medical_records}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="form-group">
-                <label>Alamat:</label>
-                <textarea
-                    name="patientAddress"
-                    value={patientDetails.patientAddress}
-                    onChange={handleInputChange}
-                    rows="3"
-                />
-            </div>
-            <div className="form-group">
-                <label>No Whatsapp:</label>
-                <input
-                    type="text"
-                    name="whatsappNumber"
-                    value={patientDetails.whatsappNumber}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <button className="save-button" onClick={savePatientDetails}>
-                Simpan
-            </button>
         </div>
     );
 };
