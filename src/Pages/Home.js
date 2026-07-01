@@ -21,6 +21,7 @@ import PasienLamaImg from '../Images/PasienLama.png';
 import FilterEditImg from '../Images/filter&edit.png';
 import ExcelKunjunganHarianImg from '../Images/Excel-Kunjungan-Harian.png';
 import RevenueImg from '../Images/Revenue.png';
+import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -215,7 +216,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/list-belanja-obat">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/emr-q-b0576.appspot.com/o/ListBelanjaObatdan%20Alkes.png?alt=media&token=3c1f8fa1-dc86-4727-8f38-2c585eb53ebc"
+                        src={ListBelanjaObatImg}
                         alt="List Belanja Obat"
                         className="image-button-ServiceSetting"
                     />
