@@ -30,6 +30,11 @@ const UpdateTreatment = () => {
     bodyTemperature: "",
     respiratoryRate: "",
     bodyWeight: "",
+    bodyHeight: "", // Tambahkan state untuk Tinggi Badan
+    imt: {
+      value: "",
+      category: ""
+    },
     treatmentCost: "",
   });
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -44,6 +49,37 @@ const UpdateTreatment = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalText, setModalText] = useState("");
   const [currentPlaceholder, setCurrentPlaceholder] = useState("");
+
+   // Fungsi untuk menghitung IMT
+  const calculateIMT = (weight, height) => {
+    if (!weight || !height) return { value: '', category: '' };
+    const weightInKg = parseFloat(weight);
+    const heightInMeters = parseFloat(height) / 100;
+    if (weightInKg <= 0 || heightInMeters <= 0) return { value: '', category: '' };
+    const imt = weightInKg / (heightInMeters * heightInMeters);
+    const imtValue = imt.toFixed(1);
+    let category = '';
+    
+    if (imtValue < 18.5) category = 'Kurus';
+    else if (imtValue >= 18.5 && imtValue < 25) category = 'Normal';
+    else if (imtValue >= 25 && imtValue < 30) category = 'Gemuk';
+    else if (imtValue >= 30) category = 'Obesitas';
+    
+    return { value: imtValue, category };
+  };
+
+  // Effect untuk menghitung IMT setiap kali berat badan atau tinggi badan berubah
+  useEffect(() => {
+    const imt = calculateIMT(
+      updatedTreatmentData.bodyWeight,
+      updatedTreatmentData.bodyHeight
+    );
+    setUpdatedTreatmentData((prevData) => ({
+      ...prevData,
+      imt: imt
+    }));
+  }, [updatedTreatmentData.bodyWeight, updatedTreatmentData.bodyHeight]);
+
 
   const openModal = (fieldName) => {
     setCurrentPlaceholder(fieldName);
@@ -43587,6 +43623,17 @@ const UpdateTreatment = () => {
       .then((response) => {
         setTreatmentData(response.data);
         const timestamp = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+        // Ambil data IMT dari response atau hitung ulang
+        const bodyWeight = response.data.bodyWeight || "";
+        const bodyHeight = response.data.bodyHeight || "";
+        const imtData = response.data.imt || { value: "", category: "" };
+        
+        // Jika IMT tidak ada di database, hitung ulang
+        let imt = imtData;
+        if (!imtData.value && bodyWeight && bodyHeight) {
+          imt = calculateIMT(bodyWeight, bodyHeight);
+        }
+        
         setUpdatedTreatmentData({
           complaint: response.data.complaint || "",
           condition_physical_examination:
@@ -43601,7 +43648,9 @@ const UpdateTreatment = () => {
           heartRate: response.data.heartRate || "",
           bodyTemperature: response.data.bodyTemperature || "",
           respiratoryRate: response.data.respiratoryRate || "",
-          bodyWeight: response.data.bodyWeight || "",
+          bodyWeight: bodyWeight,
+          bodyHeight: bodyHeight,
+          imt: imt,
           treatmentCost: response.data.treatmentCost || "",
         });
       })
@@ -43715,6 +43764,8 @@ const UpdateTreatment = () => {
       bodyTemperature: updatedTreatmentData.bodyTemperature,
       respiratoryRate: updatedTreatmentData.respiratoryRate,
       bodyWeight: updatedTreatmentData.bodyWeight,
+      bodyHeight: updatedTreatmentData.bodyHeight, // Sertakan tinggi badan
+      imt: updatedTreatmentData.imt, // Sertakan IMT
       treatmentCost: updatedTreatmentData.treatmentCost,
       diagnosis: {
         code: diagnosisCode,
@@ -43984,6 +44035,43 @@ const UpdateTreatment = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               className="UpdateTreatment-input"
+            />
+
+            <label htmlFor="bodyHeight" className="UpdateTreatment-label">
+              Tinggi Badan (cm):
+            </label>
+            <input
+              type="text"
+              id="bodyHeight"
+              name="bodyHeight"
+              value={updatedTreatmentData.bodyHeight}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              className="UpdateTreatment-input"
+              placeholder="Masukkan Tinggi Badan (cm)"
+            />
+
+            {/* Tampilan IMT */}
+            <label className="UpdateTreatment-label">
+              IMT (Indeks Massa Tubuh):
+            </label>
+            <input
+              type="text"
+              id="imt"
+              name="imt"
+              value={
+                updatedTreatmentData.imt && updatedTreatmentData.imt.value
+                  ? `${updatedTreatmentData.imt.value} - ${updatedTreatmentData.imt.category}`
+                  : 'Belum dihitung'
+              }
+              readOnly
+              className="UpdateTreatment-input imt-result"
+              style={{
+                backgroundColor: updatedTreatmentData.imt && updatedTreatmentData.imt.value
+                  ? getIMTBackgroundColor(updatedTreatmentData.imt.category)
+                  : 'white',
+                fontWeight: 'bold'
+              }}
             />
 
             <label htmlFor="Medication" className="UpdateTreatment-label">
