@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { FaTimes, FaPlus, FaUserMd } from "react-icons/fa";
+import { FaTimes, FaPlus, FaUserMd, FaHome } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
-import EditIconImg from '../Images/TRUE LETTER.png';
 
 const EMR = () => {
   const { id } = useParams();
@@ -164,7 +163,10 @@ const EMR = () => {
   return (
     <div>
       <Link to="/home" className="home-link">
-        <img src="https://firebasestorage.googleapis.com/v0/b/rekammedis-70985.appspot.com/o/images__14_-removebg-preview.png?alt=media&token=dac5fd74-4670-4ce9-a490-4f01637c2f22" alt="Home" />
+        <div className="home-button">
+          <FaHome className="home-icon" />
+          <span className="home-text">Home</span>
+        </div>
       </Link>
 
       <h2 className="title">Electronic Medical Records (EMR)</h2>
@@ -174,23 +176,20 @@ const EMR = () => {
             <div className="biodata-card">
               <div className="biodata-content">
                 <div className="emotion-icon">😊</div>
-                <div className="edit-bio-wrapper">
-                  <Link to={`/emr/${id}/edit-bio`}>
-                    <img
-                      src={EditIconImg}
-                      alt="Edit Bio"
-                      className="EditBio-unix23288"
-                    />
-                  </Link>
+                {/* Edit Bio Icon - Dihapus */}
+                
+                {/* Rectangle untuk teks Bio Data */}
+                <div className="biodata-rectangle">
+                  <p><span className="label">Nama :</span> {patientDetails.name}</p>
+                  <p><span className="label">Tanggal Lahir :</span> {patientDetails.birthDate}</p>
+                  <p><span className="label">No KTP :</span> {patientDetails.identifier}</p>
+                  <p><span className="label">No Rekam Medis :</span> {patientDetails.number_medical_records}</p>
+                  <p><span className="label">Alamat :</span> {patientDetails.patientAddress}</p>
+                  <p><span className="label">No Wa :</span> {patientDetails.whatsappNumber}</p>
+                  <p><span className="label">Alergi :</span> {allergies}</p>
+                  <p><span className="label">Riwayat Kesehatan :</span> {healthHistory}</p>
                 </div>
-                <p><span className="label">Nama :</span> {patientDetails.name}</p>
-                <p><span className="label">Tanggal Lahir :</span> {patientDetails.birthDate}</p>
-                <p><span className="label">No KTP :</span> {patientDetails.identifier}</p>
-                <p><span className="label">No Rekam Medis :</span> {patientDetails.number_medical_records}</p>
-                <p><span className="label">Alamat :</span> {patientDetails.patientAddress}</p>
-                <p><span className="label">No Wa :</span> {patientDetails.whatsappNumber}</p>
-                <p><span className="label">Alergi :</span> {allergies}</p>
-                <p><span className="label">Riwayat Kesehatan :</span> {healthHistory}</p>
+                
                 <div className="button-wrapper">
                   <Link to={`/emr/${id}/edit-health`} className="purple-button">
                     Alergi & Riwayat Kesehatan
@@ -231,7 +230,7 @@ const EMR = () => {
             </Tabs>
           </div>
 
-          {/* Button/Icon Tambah Pengobatan - Style Baru */}
+          {/* Button/Icon Tambah Pengobatan */}
           <div className="tambah-pengobatan-wrapper">
             <Link to={`/emr/${id}/tambah-pengobatan`} className="tambah-pengobatan-link">
               <div className="tambah-pengobatan-button">
