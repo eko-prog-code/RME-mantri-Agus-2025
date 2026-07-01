@@ -802,3 +802,457 @@ h2 {
     font-size: 14px;
   }
 }
+
+/* ============================================
+   BIODATA CARD - RECTANGLE STYLE
+   ============================================ */
+
+/* Biodata Card - Rectangle */
+.biodata-card {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border-radius: 16px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  min-height: 500px;
+  padding: 20px;
+  margin: 10px 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.biodata-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+  transform: translateY(-3px);
+}
+
+/* Header/Border Atas */
+.biodata-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #007bff, #6c63ff, #00d4ff, #007bff);
+  background-size: 300% 300%;
+  border-radius: 16px 16px 0 0;
+  animation: gradient-border 4s ease infinite;
+}
+
+@keyframes gradient-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Konten biodata */
+.biodata-content {
+  position: relative;
+  z-index: 2;
+  padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Style untuk teks di biodata */
+.biodata-content p {
+  font-size: 15px;
+  color: #333;
+  margin: 6px 0;
+  padding: 10px 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.biodata-content p .label {
+  font-weight: 700;
+  color: #2c3e50;
+  min-width: 150px;
+  display: inline-block;
+}
+
+.biodata-content p:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+  border-left: 4px solid #6c63ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit icon positioning */
+.biodata-content .EditBio-unix23288 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.biodata-content .EditBio-unix23288:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Emotion icon styling */
+.biodata-content .emotion-icon {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #007bff, #6c63ff);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  z-index: 10;
+  border: 3px solid white;
+  animation: pulse-emotion 2s infinite;
+}
+
+@keyframes pulse-emotion {
+  0% { box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+  50% { box-shadow: 0 4px 25px rgba(0, 123, 255, 0.7); }
+  100% { box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+}
+
+/* Style untuk tombol di biodata */
+.biodata-content .button-wrapper {
+  margin: 8px 0;
+}
+
+.biodata-content .purple-button {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #6c63ff, #5a52d5);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.biodata-content .purple-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(108, 99, 255, 0.5);
+  background: linear-gradient(135deg, #7a73ff, #5a52d5);
+}
+
+.biodata-content .red-button {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #ff4d4d, #cc4040);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.biodata-content .red-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 77, 77, 0.5);
+  background: linear-gradient(135deg, #ff6666, #cc4040);
+}
+
+/* ============================================
+   TAMBAH PENGOBATAN BUTTON - STYLE BARU
+   ============================================ */
+
+.tambah-pengobatan-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.tambah-pengobatan-link {
+  text-decoration: none;
+  width: 100%;
+  max-width: 500px;
+}
+
+.tambah-pengobatan-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 16px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.tambah-pengobatan-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(40, 167, 69, 0.6);
+  background: linear-gradient(135deg, #34ce57, #28a745);
+}
+
+.tambah-pengobatan-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.tambah-pengobatan-button .plus-icon {
+  font-size: 24px;
+  background: white;
+  color: #28a745;
+  border-radius: 50%;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.tambah-pengobatan-button .user-icon {
+  font-size: 24px;
+  opacity: 0.8;
+}
+
+.tambah-pengobatan-button .button-text {
+  flex: 1;
+  text-align: center;
+}
+
+/* Animasi pulse untuk button */
+.tambah-pengobatan-button {
+  animation: pulse-button 2s infinite;
+}
+
+@keyframes pulse-button {
+  0% { box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4); }
+  50% { box-shadow: 0 4px 30px rgba(40, 167, 69, 0.7); }
+  100% { box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4); }
+}
+
+/* ============================================
+   RESPONSIVE UNTUK MOBILE
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Biodata Card Mobile */
+  .biodata-card {
+    min-height: auto;
+    border-radius: 12px;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .biodata-content {
+    padding: 15px 15px;
+  }
+  
+  .biodata-content p {
+    font-size: 13px;
+    margin: 4px 0;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+  }
+  
+  .biodata-content p .label {
+    min-width: 100px;
+    font-size: 12px;
+  }
+  
+  .biodata-content p:hover {
+    transform: translateX(3px);
+  }
+  
+  .biodata-content .EditBio-unix23288 {
+    width: 32px;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+  }
+  
+  .biodata-content .EditBio-unix23288:hover {
+    transform: scale(1.1) rotate(10deg);
+  }
+  
+  .biodata-content .emotion-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    top: -12px;
+  }
+  
+  .biodata-content .purple-button {
+    font-size: 12px;
+    padding: 10px 15px;
+  }
+  
+  .biodata-content .red-button {
+    font-size: 11px;
+    padding: 10px 15px;
+  }
+  
+  .biodata-card::before {
+    height: 3px;
+  }
+
+  /* Tambah Pengobatan Button Mobile */
+  .tambah-pengobatan-button {
+    padding: 14px 20px;
+    font-size: 14px;
+    gap: 10px;
+  }
+  
+  .tambah-pengobatan-button .plus-icon {
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .tambah-pengobatan-button .user-icon {
+    font-size: 18px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE UNTUK TABLET
+   ============================================ */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .biodata-content {
+    padding: 20px 25px;
+  }
+  
+  .biodata-content p {
+    font-size: 14px;
+    padding: 9px 14px;
+  }
+  
+  .biodata-content p .label {
+    min-width: 130px;
+  }
+  
+  .biodata-content .EditBio-unix23288 {
+    width: 38px;
+  }
+  
+  .biodata-content .emotion-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+  }
+  
+  .tambah-pengobatan-button {
+    padding: 15px 25px;
+    font-size: 16px;
+  }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+.biodata-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.biodata-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.biodata-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.biodata-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ============================================
+   HAPUS CSS LAMA YANG TIDAK TERPAKAI
+   ============================================ */
+
+/* Hapus atau comment CSS lama yang mengganggu */
+
+/* 
+.patient-details {
+  background-image: none;
+  height: auto;
+}
+*/
+
+.biodata-card p {
+  /* Hapus override yang tidak perlu */
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.purple-button {
+  /* Hapus override yang tidak perlu */
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.red-button {
+  /* Hapus override yang tidak perlu */
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+/* Pastikan patient-details tidak memiliki background image */
+.patient-details {
+  background-image: none !important;
+  background-color: transparent !important;
+  height: auto !important;
+  min-height: 500px;
+}
