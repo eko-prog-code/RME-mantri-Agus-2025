@@ -5,8 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
-import EditIconImg from '../Images/TRUE LETTER.png';
-import BiodataBgImg from '../Images/BioData-Img.webp';
+import BiodataBgImg from '../Images/TRUE LETTER.png';
 
 const EMR = () => {
   const { id } = useParams();
