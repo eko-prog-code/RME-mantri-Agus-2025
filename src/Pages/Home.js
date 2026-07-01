@@ -18,6 +18,7 @@ import './Home.css';
 // Import gambar dari lokal
 import PasienBaruImg from '../Images/PasienBaru.png';
 import PasienLamaImg from '../Images/PasienLama.png';
+import FilterEditImg from '../Images/filter&edit.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -171,12 +172,13 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/editHistory">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2Ffilter%26edit.png?alt=media&token=797cb1bf-0912-466e-8fb2-c1100ab16a60"
-                        alt="EditHistory"
-                        className="image-button-ServiceSetting"
+                    src={FilterEditImg}
+                    alt="EditHistory"
+                    className="image-button-ServiceSetting"
                     />
                 </Link>
             </div>
+                        
             <div className="image-button-container-ServiceSetting">
                 <Link to="/excelHarian">
                     <img
