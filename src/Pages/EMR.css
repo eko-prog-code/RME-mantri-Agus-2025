@@ -1134,3 +1134,111 @@ html {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+
+/* ============================================
+   COIN STACK ICON STYLES
+   ============================================ */
+
+.coin-stack-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.coin-icon-main {
+  font-size: 38px;
+  color: #f39c12;
+  filter: drop-shadow(0 2px 8px rgba(243, 156, 18, 0.4));
+  animation: coin-float 2.5s ease-in-out infinite;
+}
+
+.coin-sparkle {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 14px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes coin-float {
+  0%, 100% { 
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% { 
+    transform: translateY(-8px) rotate(5deg);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    transform: scale(0.8) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* Payment Info */
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.payment-label {
+  font-size: 13px;
+  color: #7f8c8d;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin: 0 !important;
+}
+
+.payment-amount {
+  font-size: 18px;
+  color: #2c3e50;
+  font-weight: 700;
+  margin: 2px 0 0 0 !important;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive untuk mobile */
+@media (max-width: 768px) {
+  .coin-icon-main {
+    font-size: 30px;
+  }
+  
+  .payment-label {
+    font-size: 12px;
+  }
+  
+  .payment-amount {
+    font-size: 16px;
+  }
+  
+  .coin-sparkle {
+    font-size: 12px;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coin-icon-main {
+    font-size: 26px;
+  }
+  
+  .payment-label {
+    font-size: 11px;
+  }
+  
+  .payment-amount {
+    font-size: 14px;
+  }
+}
