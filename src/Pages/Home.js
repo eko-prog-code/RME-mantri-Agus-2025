@@ -23,6 +23,7 @@ import ExcelKunjunganHarianImg from '../Images/Excel-Kunjungan-Harian.png';
 import RevenueImg from '../Images/Revenue.png';
 import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
 import SatuSehatImg from '../Images/Satu-Sehat.png';
+import KunjunganImg from '../Images/List-Kunjungan.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -237,7 +238,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/kunjungan">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FKunjungan.png?alt=media&token=5ab0b7ac-0217-4006-b356-5132399b9ff4"
+                        src={KunjunganImg}
                         alt="Kunjungan"
                         className="image-button-ServiceSetting"
                     />
