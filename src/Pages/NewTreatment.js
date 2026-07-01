@@ -26,10 +26,40 @@ const NewTreatment = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [doctorNIK, setDoctorNIK] = useState('');
   const [bodyWeight, setBodyWeight] = useState('');
+  const [bodyHeight, setBodyHeight] = useState(''); // State untuk Tinggi Badan
+  const [imtValue, setImtValue] = useState(''); // State untuk IMT
   const [treatmentCost, setTreatmentCost] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalText, setModalText] = useState("");
   const [currentPlaceholder, setCurrentPlaceholder] = useState("");
+
+   // Fungsi untuk menghitung IMT
+  const calculateIMT = (weight, height) => {
+    if (!weight || !height) return '';
+    const weightInKg = parseFloat(weight);
+    const heightInMeters = parseFloat(height) / 100; // Konversi cm ke meter
+    if (weightInKg <= 0 || heightInMeters <= 0) return '';
+    const imt = weightInKg / (heightInMeters * heightInMeters);
+    return imt.toFixed(1); // Bulatkan ke 1 desimal
+  };
+
+  // Fungsi untuk mendapatkan kategori IMT
+  const getIMTCategory = (imt) => {
+    if (!imt) return '';
+    const imtValue = parseFloat(imt);
+    if (imtValue < 18.5) return 'Kurus';
+    if (imtValue >= 18.5 && imtValue < 25) return 'Normal';
+    if (imtValue >= 25 && imtValue < 30) return 'Gemuk';
+    if (imtValue >= 30) return 'Obesitas';
+    return '';
+  };
+
+  // Effect untuk menghitung IMT setiap kali berat badan atau tinggi badan berubah
+  useEffect(() => {
+    const imt = calculateIMT(bodyWeight, bodyHeight);
+    setImtValue(imt);
+  }, [bodyWeight, bodyHeight]);
+
 
   // Fungsi untuk menangani penurunan gambar
   const onDrop = async (acceptedFiles) => {
@@ -18661,6 +18691,13 @@ const NewTreatment = () => {
     }
   };
 
+  const handleBodyHeightChange = (e) => {
+    const value = e.target.value;
+    if (!isNaN(value)) {
+      setBodyHeight(value);
+    }
+  };
+
   const handleRespiratoryRateChange = (e) => {
     const value = e.target.value;
     if (!isNaN(value)) {
@@ -18738,6 +18775,11 @@ const NewTreatment = () => {
         bodyTemperature: bodyTemperature,
         respiratoryRate: respiratoryRate,
         bodyWeight: bodyWeight,
+        bodyHeight: bodyHeight, // Menambahkan tinggi badan
+        imt: {
+          value: imtValue,
+          category: getIMTCategory(imtValue)
+        },
         treatmentCost: treatmentCost,
       };
 
@@ -18868,6 +18910,34 @@ const NewTreatment = () => {
             onChange={handleBodyWeightChange}
             className="unique-input-field"
           />
+
+          <label>Tinggi Badan (cm):</label>
+          <input
+            type="text"
+            value={bodyHeight}
+            onChange={handleBodyHeightChange}
+            className="unique-input-field"
+            placeholder="Masukkan Tinggi Badan (cm)"
+          />
+
+          {/* Tampilan IMT */}
+          <div className="imt-display">
+            <label>IMT (Indeks Massa Tubuh):</label>
+            <input
+              type="text"
+              value={imtValue ? `${imtValue} - ${getIMTCategory(imtValue)}` : 'Belum dihitung'}
+              readOnly
+              className="unique-input-field imt-result"
+              style={{
+                backgroundColor: imtValue ? 
+                  getIMTCategory(imtValue) === 'Normal' ? '#d4edda' :
+                  getIMTCategory(imtValue) === 'Kurus' ? '#fff3cd' :
+                  getIMTCategory(imtValue) === 'Gemuk' ? '#fff3cd' :
+                  getIMTCategory(imtValue) === 'Obesitas' ? '#f8d7da' : 'white'
+                : 'white'
+              }}
+            />
+          </div>
 
           <h3>Diagnosa Medis</h3>
           <input
