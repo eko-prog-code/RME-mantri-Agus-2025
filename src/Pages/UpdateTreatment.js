@@ -22,12 +22,17 @@ const UpdateTreatment = () => {
     participant: "",
     images: [],
     Encounter_period_start: timestamp
-    ? format(new Date(timestamp), "dd MMMM yyyy HH:mm:ss")
-    : "", // Tetap gunakan nilai asli
+      ? format(new Date(timestamp), "dd MMMM yyyy HH:mm:ss")
+      : "",
     systolicBloodPressure: "",
     diastolicBloodPressure: "",
     heartRate: "",
     bodyTemperature: "",
+    bodyHeight: "",
+    imt: {
+      value: "",
+      category: ""
+    },
     respiratoryRate: "",
     bodyWeight: "",
     treatmentCost: "",
@@ -44,6 +49,65 @@ const UpdateTreatment = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalText, setModalText] = useState("");
   const [currentPlaceholder, setCurrentPlaceholder] = useState("");
+
+  // Fungsi untuk menghitung IMT dengan penanganan error
+  const calculateIMT = (weight, height) => {
+    try {
+      // Jika berat badan atau tinggi badan tidak ada atau tidak valid
+      if (!weight || !height || weight === '' || height === '') {
+        return { value: '', category: '' };
+      }
+      
+      const weightInKg = parseFloat(weight);
+      const heightInMeters = parseFloat(height) / 100;
+      
+      // Validasi nilai
+      if (isNaN(weightInKg) || isNaN(heightInMeters) || 
+          weightInKg <= 0 || heightInMeters <= 0) {
+        return { value: '', category: '' };
+      }
+      
+      const imt = weightInKg / (heightInMeters * heightInMeters);
+      const imtValue = imt.toFixed(1);
+      let category = '';
+      
+      // Menentukan kategori IMT
+      const imtNum = parseFloat(imtValue);
+      if (imtNum < 18.5) category = 'Kurus';
+      else if (imtNum >= 18.5 && imtNum < 25) category = 'Normal';
+      else if (imtNum >= 25 && imtNum < 30) category = 'Gemuk';
+      else if (imtNum >= 30) category = 'Obesitas';
+      
+      return { value: imtValue, category };
+    } catch (error) {
+      console.error("Error calculating IMT:", error);
+      return { value: '', category: '' };
+    }
+  };
+
+  // Fungsi untuk mendapatkan warna latar belakang berdasarkan kategori IMT
+  const getIMTBackgroundColor = (category) => {
+    if (!category) return 'white';
+    switch(category) {
+      case 'Normal': return '#d4edda';
+      case 'Kurus': return '#fff3cd';
+      case 'Gemuk': return '#fff3cd';
+      case 'Obesitas': return '#f8d7da';
+      default: return 'white';
+    }
+  };
+
+  // Effect untuk menghitung IMT setiap kali berat badan atau tinggi badan berubah
+  useEffect(() => {
+    const imt = calculateIMT(
+      updatedTreatmentData.bodyWeight,
+      updatedTreatmentData.bodyHeight
+    );
+    setUpdatedTreatmentData((prevData) => ({
+      ...prevData,
+      imt: imt
+    }));
+  }, [updatedTreatmentData.bodyWeight, updatedTreatmentData.bodyHeight]);
 
   const openModal = (fieldName) => {
     setCurrentPlaceholder(fieldName);
@@ -43579,36 +43643,71 @@ const UpdateTreatment = () => {
     setDoctors(doctorsArray); // Add this line to set the 'doctors' state
   }, [updatedTreatmentData.participant]);
 
+// Effect utama untuk mengambil data treatment
   useEffect(() => {
-    axios
-      .get(
-        `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records/${treatmentId}.json`
-      )
-      .then((response) => {
-        setTreatmentData(response.data);
-        const timestamp = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
-        setUpdatedTreatmentData({
-          complaint: response.data.complaint || "",
-          condition_physical_examination:
-            response.data.condition_physical_examination || "",
-          Medication: response.data.Medication || "",
-          diagnosis: response.data.diagnosis || "",
-          participant: response.data.participant || "",
-          images: response.data.images || [],
-          Encounter_period_start: timestamp,
-          systolicBloodPressure: response.data.systolicBloodPressure || "",
-          diastolicBloodPressure: response.data.diastolicBloodPressure || "",
-          heartRate: response.data.heartRate || "",
-          bodyTemperature: response.data.bodyTemperature || "",
-          respiratoryRate: response.data.respiratoryRate || "",
-          bodyWeight: response.data.bodyWeight || "",
-          treatmentCost: response.data.treatmentCost || "",
-        });
-      })
-      .catch((error) => {
+    const fetchTreatmentData = async () => {
+      try {
+        const response = await axios.get(
+          `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records/${treatmentId}.json`
+        );
+        
+        if (response.data) {
+          setTreatmentData(response.data);
+          
+          // Mengambil data dengan penanganan nilai null/undefined
+          const bodyWeight = response.data.bodyWeight || "";
+          const bodyHeight = response.data.bodyHeight || "";
+          
+          // Cek apakah IMT ada di database
+          let imtData = response.data.imt || { value: "", category: "" };
+          
+          // Jika IMT tidak ada atau tidak valid, hitung ulang
+          if (!imtData.value || imtData.value === '') {
+            imtData = calculateIMT(bodyWeight, bodyHeight);
+          }
+          
+          // Format diagnosis dari object ke string
+          let diagnosisString = "";
+          if (response.data.diagnosis) {
+            if (typeof response.data.diagnosis === 'object') {
+              diagnosisString = `${response.data.diagnosis.code || ''} - ${response.data.diagnosis.name || ''}`;
+            } else {
+              diagnosisString = response.data.diagnosis || "";
+            }
+          }
+
+          const timestampNow = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+          
+          setUpdatedTreatmentData({
+            complaint: response.data.complaint || "",
+            condition_physical_examination: response.data.condition_physical_examination || "",
+            Medication: response.data.Medication || "",
+            diagnosis: diagnosisString,
+            participant: response.data.participant || "",
+            images: response.data.images || [],
+            Encounter_period_start: response.data.Encounter_period_start || timestampNow,
+            systolicBloodPressure: response.data.systolicBloodPressure || "",
+            diastolicBloodPressure: response.data.diastolicBloodPressure || "",
+            heartRate: response.data.heartRate || "",
+            bodyTemperature: response.data.bodyTemperature || "",
+            respiratoryRate: response.data.respiratoryRate || "",
+            bodyWeight: bodyWeight,
+            bodyHeight: bodyHeight,
+            imt: imtData,
+            treatmentCost: response.data.treatmentCost || "",
+          });
+          
+          // Set diagnosis untuk field input
+          setDiagnosis(diagnosisString);
+        }
+      } catch (error) {
         console.error("Error fetching treatment data:", error);
-      });
+      }
+    };
+
+    fetchTreatmentData();
   }, [id, treatmentId]);
+
 
   useEffect(() => {
     const doctorNIKData = {
@@ -43694,47 +43793,76 @@ const UpdateTreatment = () => {
     }
   };
 
+  // Pastikan IMT dihitung ulang sebelum save
+      const imtData = calculateIMT(
+        updatedTreatmentData.bodyWeight,
+        updatedTreatmentData.bodyHeight
+      );
+      
+
   const updateTreatment = () => {
-    const diagnosisArray =
-      typeof updatedTreatmentData.diagnosis === "string"
-        ? updatedTreatmentData.diagnosis.split(" - ")
-        : ["", ""];
+    try {
+      // Handle diagnosis dengan aman
+      let diagnosisCode = "";
+      let diagnosisName = "";
+      
+      if (updatedTreatmentData.diagnosis) {
+        if (typeof updatedTreatmentData.diagnosis === 'object') {
+          diagnosisCode = updatedTreatmentData.diagnosis.code || "";
+          diagnosisName = updatedTreatmentData.diagnosis.name || "";
+        } else {
+          const diagnosisArray = updatedTreatmentData.diagnosis.split(" - ");
+          diagnosisCode = diagnosisArray[0] || "";
+          diagnosisName = diagnosisArray[1] || "";
+        }
+      }
+      
+      // Hitung ulang IMT untuk memastikan data terbaru
+      const imtData = calculateIMT(
+        updatedTreatmentData.bodyWeight,
+        updatedTreatmentData.bodyHeight
+      );
+      
+      const originalTimestamp = updatedTreatmentData.Encounter_period_start;
+      
+      const updatedDataWithTimestamp = {
+        ...updatedTreatmentData,
+        identifier: id,
+        timestamp: timestamp || new Date().getTime(),
+        doctorNIK: doctorNIK,
+        Encounter_period_start: originalTimestamp,
+        systolicBloodPressure: updatedTreatmentData.systolicBloodPressure || "",
+        diastolicBloodPressure: updatedTreatmentData.diastolicBloodPressure || "",
+        heartRate: updatedTreatmentData.heartRate || "",
+        bodyTemperature: updatedTreatmentData.bodyTemperature || "",
+        respiratoryRate: updatedTreatmentData.respiratoryRate || "",
+        bodyWeight: updatedTreatmentData.bodyWeight || "",
+        bodyHeight: updatedTreatmentData.bodyHeight || "",
+        imt: imtData,
+        treatmentCost: updatedTreatmentData.treatmentCost || "",
+        diagnosis: {
+          code: diagnosisCode,
+          name: diagnosisName,
+        },
+      };
 
-    const [diagnosisCode, diagnosisName] = diagnosisArray;
-    // Gunakan timestamp asli jika tersedia, tanpa membuat timestamp baru
-    const originalTimestamp = updatedTreatmentData.Encounter_period_start;
-    const updatedDataWithTimestamp = {
-      ...updatedTreatmentData,
-      identifier: id,
-      timestamp,
-      doctorNIK: doctorNIK,
-      Encounter_period_start: originalTimestamp, // Gunakan timestamp asli
-      systolicBloodPressure: updatedTreatmentData.systolicBloodPressure,
-      diastolicBloodPressure: updatedTreatmentData.diastolicBloodPressure,
-      heartRate: updatedTreatmentData.heartRate,
-      bodyTemperature: updatedTreatmentData.bodyTemperature,
-      respiratoryRate: updatedTreatmentData.respiratoryRate,
-      bodyWeight: updatedTreatmentData.bodyWeight,
-      treatmentCost: updatedTreatmentData.treatmentCost,
-      diagnosis: {
-        code: diagnosisCode,
-        name: diagnosisName,
-      },
-    };
-
-    axios
-      .put(
-        `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records/${treatmentId}.json`,
-        updatedDataWithTimestamp
-      )
-      .then((response) => {
-        console.log("Treatment updated successfully:", response.data);
-        navigate(`/emr/${id}`);
-      })
-      .catch((error) => {
-        console.error("Error updating treatment:", error);
-      });
+      axios
+        .put(
+          `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records/${treatmentId}.json`,
+          updatedDataWithTimestamp
+        )
+        .then((response) => {
+          console.log("Treatment updated successfully:", response.data);
+          navigate(`/emr/${id}`);
+        })
+        .catch((error) => {
+          console.error("Error updating treatment:", error);
+        });
+    } catch (error) {
+      console.error("Error in updateTreatment:", error);
+    }
   };
+
 
   const renderImagePreviews = () => {
     return (
@@ -43984,6 +44112,43 @@ const UpdateTreatment = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               className="UpdateTreatment-input"
+            />
+
+             <label htmlFor="bodyHeight" className="UpdateTreatment-label">
+              Tinggi Badan (cm):
+            </label>
+            <input
+              type="text"
+              id="bodyHeight"
+              name="bodyHeight"
+              value={updatedTreatmentData.bodyHeight || ""}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              className="UpdateTreatment-input"
+              placeholder="Masukkan Tinggi Badan (cm)"
+            />
+
+            {/* Tampilan IMT */}
+            <label className="UpdateTreatment-label">
+              IMT (Indeks Massa Tubuh):
+            </label>
+            <input
+              type="text"
+              id="imt"
+              name="imt"
+              value={
+                updatedTreatmentData.imt && updatedTreatmentData.imt.value
+                  ? `${updatedTreatmentData.imt.value} - ${updatedTreatmentData.imt.category}`
+                  : 'Belum dihitung'
+              }
+              readOnly
+              className="UpdateTreatment-input imt-result"
+              style={{
+                backgroundColor: updatedTreatmentData.imt && updatedTreatmentData.imt.value
+                  ? getIMTBackgroundColor(updatedTreatmentData.imt.category)
+                  : 'white',
+                fontWeight: 'bold'
+              }}
             />
 
             <label htmlFor="Medication" className="UpdateTreatment-label">
