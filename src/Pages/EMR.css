@@ -754,3 +754,51 @@ h2 {
     padding: 10px;
   }
 }
+
+/* Style untuk IMT terbaru di biodata */
+.imt-latest-display {
+  margin: 15px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.imt-latest-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Style untuk IMT di setiap treatment */
+.imt-treatment-display {
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border-left: 4px solid #007bff;
+  background: #f8f9fa;
+}
+
+/* Animasi untuk IMT display */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.imt-latest-display {
+  animation: pulse 2s infinite;
+}
+
+/* Responsive untuk IMT display */
+@media (max-width: 768px) {
+  .imt-latest-display {
+    padding: 8px;
+    margin: 10px 0;
+  }
+  
+  .imt-treatment-display {
+    padding: 6px;
+    font-size: 14px;
+  }
+}
