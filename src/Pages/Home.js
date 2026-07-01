@@ -22,6 +22,7 @@ import FilterEditImg from '../Images/filter&edit.png';
 import ExcelKunjunganHarianImg from '../Images/Excel-Kunjungan-Harian.png';
 import RevenueImg from '../Images/Revenue.png';
 import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
+import SatuSehatImg from '../Images/Satu-Sehat.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -226,7 +227,7 @@ const Home = () => {
             <div className="image-button-container-SatuSehat">
                 <Link to="/satusehat">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2FIntegrasi%20Satu%20Sehat.png?alt=media&token=50da787c-5b95-482b-a6ff-33ef99ab9215"
+                        src={SatuSehatImg}
                         alt="Satu Sehat Integrate"
                         className="image-button-SatuSehat"
                     />
