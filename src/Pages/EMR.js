@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
+import EditIconImg from '../Images/TRUE LETTER.png';
 
 const EMR = () => {
   const { id } = useParams();
@@ -175,10 +176,10 @@ const EMR = () => {
               <div className="edit-bio-wrapper">
                 <Link to={`/emr/${id}/edit-bio`}>
                   <img
-                    src="https://firebasestorage.googleapis.com/v0/b/emr-q-b0576.appspot.com/o/edit-icon.png?alt=media&token=be7db1f8-4aea-4417-a312-9ee84b74654a"
-                    alt="Edit Bio"
-                    className="EditBio-unix23288"
-                  />
+                  src={EditIconImg}
+                  alt="Edit Bio"
+                  className="EditBio-unix23288"
+                />
                 </Link>
               </div>
               <p>Nama : {patientDetails.name}</p>
