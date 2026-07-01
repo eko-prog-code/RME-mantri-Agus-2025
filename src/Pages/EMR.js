@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { FaTimes } from "react-icons/fa"; // Impor ikon "X" dari react-icons/fa
+import { FaTimes } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
@@ -9,7 +9,7 @@ import "./EMR.css";
 const EMR = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [value, setValue] = useState(undefined); // Default awal undefined
+  const [value, setValue] = useState(undefined);
   const location = useLocation();
   const { updatedCost } = location.state || {};
 
@@ -18,6 +18,10 @@ const EMR = () => {
   const [allergies, setAllergies] = useState("");
   const [healthHistory, setHealthHistory] = useState("");
   const [zoomedImage, setZoomedImage] = useState(null);
+
+  // Tambahan state untuk menampilkan IMT terbaru
+  const [latestIMT, setLatestIMT] = useState(null);
+
   const isEditable = (timestamp) => {
     const hoursDifference = differenceInHours(new Date(), new Date(timestamp));
     return hoursDifference <= 24;
@@ -25,6 +29,19 @@ const EMR = () => {
 
   const handleNavigate = () => {
     navigate("/edithistory");
+  };
+
+  // Fungsi untuk mendapatkan IMT terbaru dari riwayat pengobatan
+  const getLatestIMT = (treatmentsData) => {
+    if (!treatmentsData || treatmentsData.length === 0) return null;
+    
+    // Filter treatments yang memiliki data IMT
+    const treatmentsWithIMT = treatmentsData.filter(t => t.imt && t.imt.value);
+    if (treatmentsWithIMT.length === 0) return null;
+    
+    // Urutkan berdasarkan timestamp dan ambil yang terbaru
+    const sorted = treatmentsWithIMT.sort((a, b) => b.timestamp - a.timestamp);
+    return sorted[0].imt;
   };
 
   // Atur tab berdasarkan path URL saat halaman dimuat
@@ -35,11 +52,10 @@ const EMR = () => {
     else if (currentPath.includes("cppt")) setValue(2);
     else if (currentPath.includes("education")) setValue(3);
     else if (currentPath.includes("delegasi")) setValue(5);
-    else setValue(undefined); // Tetap undefined jika tidak cocok
+    else setValue(undefined);
   }, []);
 
   const handleTabChange = (event, newValue) => {
-    // Selalu navigasi ke URL, meskipun tab yang sama di klik
     switch (newValue) {
       case 0:
         navigate(`/emr/${id}/assesment`);
@@ -56,13 +72,13 @@ const EMR = () => {
       case 4:
         navigate(`/emr/${id}/refusal`);
         break;
-        case 5:
-      navigate(`/emr/${id}/delegasi`);
-      break;
+      case 5:
+        navigate(`/emr/${id}/delegasi`);
+        break;
       default:
         console.warn("Tab tidak valid");
     }
-    setValue(newValue); // Tetapkan tab aktif
+    setValue(newValue);
   };
 
   useEffect(() => {
@@ -74,7 +90,6 @@ const EMR = () => {
       .then((response) => {
         setPatientDetails(response.data);
 
-        // Mengambil data alergi dan riwayat kesehatan dari Firebase (jika ada)
         if (response.data) {
           setAllergies(response.data.Allergies || "");
           setHealthHistory(response.data.HealthHistory || "");
@@ -94,12 +109,27 @@ const EMR = () => {
           id: recordId,
           ...response.data[recordId],
         }));
-        setTreatments(treatmentsArray.reverse()); // Reverse the array
+        setTreatments(treatmentsArray.reverse());
+        
+        // Set IMT terbaru
+        const latestIMTData = getLatestIMT(treatmentsArray);
+        setLatestIMT(latestIMTData);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan:", error);
       });
   }, [id]);
+
+  // Fungsi untuk mendapatkan warna berdasarkan kategori IMT
+  const getIMTColor = (category) => {
+    switch(category) {
+      case 'Normal': return '#28a745'; // Hijau
+      case 'Kurus': return '#ffc107'; // Kuning
+      case 'Gemuk': return '#ff9800'; // Oranye
+      case 'Obesitas': return '#dc3545'; // Merah
+      default: return '#6c757d'; // Abu-abu
+    }
+  };
 
   const confirmDelete = (treatmentId) => {
     const isConfirmed = window.confirm(
@@ -134,18 +164,20 @@ const EMR = () => {
   };
 
   const deleteTreatmentRecord = (treatmentId) => {
-    // Hapus data riwayat pengobatan dari Firebase sesuai dengan ID treatment
     axios
       .delete(
         `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records/${treatmentId}.json`
       )
       .then((response) => {
         console.log("Riwayat pengobatan berhasil dihapus");
-        // Refresh data riwayat pengobatan setelah penghapusan
         const updatedTreatments = treatments.filter(
           (treatment) => treatment.id !== treatmentId
         );
         setTreatments(updatedTreatments);
+        
+        // Update IMT terbaru
+        const latestIMTData = getLatestIMT(updatedTreatments);
+        setLatestIMT(latestIMTData);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan:", error);
@@ -182,6 +214,35 @@ const EMR = () => {
 
               <p>Alergi: {allergies}</p>
               <p>Riwayat Kesehatan: {healthHistory}</p>
+              
+              {/* Menampilkan IMT Terbaru */}
+              {latestIMT && latestIMT.value && (
+                <div className="imt-latest-display" style={{
+                  marginTop: '10px',
+                  padding: '10px',
+                  borderRadius: '8px',
+                  backgroundColor: '#f8f9fa',
+                  border: `2px solid ${getIMTColor(latestIMT.category)}`
+                }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>
+                    📊 IMT Terbaru:
+                  </p>
+                  <p style={{ fontSize: '16px', margin: '0' }}>
+                    Nilai: <strong>{latestIMT.value}</strong> - 
+                    <span style={{ 
+                      color: getIMTColor(latestIMT.category),
+                      fontWeight: 'bold',
+                      marginLeft: '5px'
+                    }}>
+                      {latestIMT.category}
+                    </span>
+                  </p>
+                  <p style={{ fontSize: '12px', color: '#6c757d', marginTop: '5px' }}>
+                    *Data diambil dari riwayat pengobatan terbaru
+                  </p>
+                </div>
+              )}
+
               <div className="button-wrapper">
                 <Link to={`/emr/${id}/edit-health`} className="purple-button">
                   Alergi & Riwayat Kesehatan
@@ -199,7 +260,7 @@ const EMR = () => {
         <div className="treatments">
           <div className="tabs-wrapper">
             <Tabs
-              value={value !== undefined ? value : false} // Jika undefined, gunakan false
+              value={value !== undefined ? value : false}
               onChange={handleTabChange}
               variant="scrollable"
               scrollButtons="auto"
@@ -234,7 +295,6 @@ const EMR = () => {
             .sort((a, b) => b.timestamp - a.timestamp)
             .map((treatment) => (
               <div className="treatment-card" key={treatment.id}>
-                {/* Tambahkan gambar sampah */}
                 <img
                   src="/trash.png"
                   alt="Delete"
@@ -248,8 +308,8 @@ const EMR = () => {
                 }}>
                   <button
                     style={{
-                      backgroundColor: "#007BFF", // Warna biru
-                      color: "#FFFFFF", // Teks putih
+                      backgroundColor: "#007BFF",
+                      color: "#FFFFFF",
                       padding: "10px 20px",
                       borderRadius: "8px",
                       border: "none",
@@ -307,7 +367,7 @@ const EMR = () => {
                 >
                   <button
                     style={{
-                      backgroundColor: "#28a745", // Warna hijau
+                      backgroundColor: "#28a745",
                       color: "#fff",
                       padding: "10px 20px",
                       borderRadius: "8px",
@@ -331,10 +391,32 @@ const EMR = () => {
                   DiastolicBloodPressure: {treatment.diastolicBloodPressure}
                 </p>
                 <p>HeartRate: {treatment.heartRate}</p>
-                <p>HeartRate: {treatment.heartRate}</p>
                 <p>BodyTemperature: {treatment.bodyTemperature}</p>
                 <p>RespiratoryRate: {treatment.respiratoryRate}</p>
                 <p>Body Weight: {treatment.bodyWeight}</p>
+                <p>Body Height: {treatment.bodyHeight || 'Tidak diisi'}</p>
+                
+                {/* Menampilkan IMT per treatment */}
+                {treatment.imt && treatment.imt.value && (
+                  <div className="imt-treatment-display" style={{
+                    marginTop: '5px',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    backgroundColor: '#e9ecef'
+                  }}>
+                    <p style={{ margin: '0' }}>
+                      IMT: <strong>{treatment.imt.value}</strong> - 
+                      <span style={{ 
+                        color: getIMTColor(treatment.imt.category),
+                        fontWeight: 'bold',
+                        marginLeft: '5px'
+                      }}>
+                        {treatment.imt.category}
+                      </span>
+                    </p>
+                  </div>
+                )}
+                
                 <p>Terapi Obat: {treatment.Medication}</p>
                 <p>
                   Diagnosis Medis: {treatment.diagnosis.code} -{" "}
@@ -343,7 +425,7 @@ const EMR = () => {
                 <p>DPJP (Participant): {treatment.participant}</p>
                 {treatment.images && treatment.images.length > 0 && (
                   <img
-                    src={treatment.images[0]} // Ganti dengan sumber gambar dari treatment
+                    src={treatment.images[0]}
                     alt={`Treatment ${treatment.id}`}
                     className="treatment-image"
                     onClick={() => setZoomedImage(treatment.images[0])}
