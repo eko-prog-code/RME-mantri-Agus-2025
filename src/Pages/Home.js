@@ -24,6 +24,7 @@ import RevenueImg from '../Images/Revenue.png';
 import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
 import SatuSehatImg from '../Images/Satu-Sehat.png';
 import KunjunganImg from '../Images/List-Kunjungan.png';
+import WaPasienImg from '../Images/Wa-Pasien.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -248,7 +249,7 @@ const Home = () => {
             <div className="image-button-container-SatuSehat">
                 <Link to="/wa">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2FExport%20Contact%20Pasien.png?alt=media&token=dd696862-78b6-49bf-a401-02425a1d489d"
+                        src={WaPasienImg}
                         alt="wa blast"
                         className="image-button-SatuSehat"
                     />
