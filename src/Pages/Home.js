@@ -15,6 +15,10 @@ import ServiceSetting from './ServiceSetting';
 import ListBelanjaObat from './ListBelanjaObat';
 import './Home.css';
 
+// Import gambar dari lokal
+import PasienBaruImg from '../Images/PasienBaru.png';
+import PasienLamaImg from '../Images/PasienLama.png';
+
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [isNewPatient, setIsNewPatient] = useState(true);
@@ -141,7 +145,7 @@ const Home = () => {
             <h2>Rekam Medis Pasien</h2>
             <div className="image-button-container">
                 <img
-                    src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/Patient%60s%20Icon%2FRectanglePasienBaru.png?alt=media&token=5685e7b6-b6b7-4092-bd91-ece6a2cdb91c"
+                    src={PasienBaruImg}
                     alt="Pasien Baru"
                     className="image-button"
                     onClick={() => {
@@ -151,7 +155,7 @@ const Home = () => {
                 />
 
                 <img
-                    src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/Patient%60s%20Icon%2FRectanglePasienLama.png?alt=media&token=02a5bba9-7a59-4756-b971-237323ccb5ad"
+                    src={PasienLamaImg}
                     alt="Pasien Lama"
                     className="image-button"
                     onClick={() => {
