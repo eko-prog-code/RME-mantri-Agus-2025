@@ -25,6 +25,7 @@ import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
 import SatuSehatImg from '../Images/Satu-Sehat.png';
 import KunjunganImg from '../Images/List-Kunjungan.png';
 import WaPasienImg from '../Images/Wa-Pasien.png';
+import DocImg from '../Images/Doc.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -208,7 +209,7 @@ const Home = () => {
 
             <div className="image-button-container-ServiceSetting">
                 <img
-                    src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FDoc.png?alt=media&token=6d09a803-e326-4daf-8d80-8fa436af78b2"
+                    src={DocImg}
                     alt="Service Setting"
                     className="image-button-ServiceSetting"
                     onClick={() => window.open('https://medic-tech-plus.vercel.app/', '_blank')}
