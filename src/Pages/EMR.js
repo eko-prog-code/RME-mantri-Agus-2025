@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaPlus, FaUserMd } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
-import BiodataBgImg from '../Images/TRUE LETTER.png';
+import EditIconImg from '../Images/TRUE LETTER.png';
 
 const EMR = () => {
   const { id } = useParams();
@@ -171,19 +171,7 @@ const EMR = () => {
       <div className="emr-container">
         <div className="patient-details">
           {patientDetails && (
-            <div 
-              className="biodata-card"
-              style={{
-                backgroundImage: `url(${BiodataBgImg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                minHeight: '600px',
-                position: 'relative',
-                padding: '20px',
-                borderRadius: '12px'
-              }}
-            >
+            <div className="biodata-card">
               <div className="biodata-content">
                 <div className="emotion-icon">😊</div>
                 <div className="edit-bio-wrapper">
@@ -195,14 +183,14 @@ const EMR = () => {
                     />
                   </Link>
                 </div>
-                <p>Nama : {patientDetails.name}</p>
-                <p>Tanggal Lahir: {patientDetails.birthDate}</p>
-                <p>No KTP: {patientDetails.identifier}</p>
-                <p>No Rekam Medis: {patientDetails.number_medical_records}</p>
-                <p>Alamat: {patientDetails.patientAddress}</p>
-                <p>No Wa: {patientDetails.whatsappNumber}</p>
-                <p>Alergi: {allergies}</p>
-                <p>Riwayat Kesehatan: {healthHistory}</p>
+                <p><span className="label">Nama :</span> {patientDetails.name}</p>
+                <p><span className="label">Tanggal Lahir :</span> {patientDetails.birthDate}</p>
+                <p><span className="label">No KTP :</span> {patientDetails.identifier}</p>
+                <p><span className="label">No Rekam Medis :</span> {patientDetails.number_medical_records}</p>
+                <p><span className="label">Alamat :</span> {patientDetails.patientAddress}</p>
+                <p><span className="label">No Wa :</span> {patientDetails.whatsappNumber}</p>
+                <p><span className="label">Alergi :</span> {allergies}</p>
+                <p><span className="label">Riwayat Kesehatan :</span> {healthHistory}</p>
                 <div className="button-wrapper">
                   <Link to={`/emr/${id}/edit-health`} className="purple-button">
                     Alergi & Riwayat Kesehatan
@@ -242,14 +230,19 @@ const EMR = () => {
               <Tab label="Surat Delegasi" className="responsive-tab" />
             </Tabs>
           </div>
-          <Link to={`/emr/${id}/tambah-pengobatan`}>
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2Fberobat-plus.webp?alt=media&token=fa0a53ac-85e0-4a5c-bd65-5df65de7b6f6"
-              alt="Tambah Pengobatan"
-              className="tambah-button"
-            />
-            <h3 className="treatment-history">Riwayat Pengobatan</h3>
-          </Link>
+
+          {/* Button/Icon Tambah Pengobatan - Style Baru */}
+          <div className="tambah-pengobatan-wrapper">
+            <Link to={`/emr/${id}/tambah-pengobatan`} className="tambah-pengobatan-link">
+              <div className="tambah-pengobatan-button">
+                <FaPlus className="plus-icon" />
+                <span className="button-text">Tambah Pengobatan</span>
+                <FaUserMd className="user-icon" />
+              </div>
+            </Link>
+          </div>
+
+          <h3 className="treatment-history">Riwayat Pengobatan</h3>
 
           {treatments
             .slice()
