@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { FaTimes, FaPlus, FaUserMd, FaHome } from "react-icons/fa";
+import { FaTimes, FaPlus, FaUserMd, FaHome, FaCoins } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
@@ -176,7 +176,6 @@ const EMR = () => {
             <div className="biodata-card">
               <div className="biodata-content">
                 <div className="emotion-icon">😊</div>
-                {/* Edit Bio Icon - Dihapus */}
                 
                 {/* Rectangle untuk teks Bio Data */}
                 <div className="biodata-rectangle">
@@ -286,25 +285,24 @@ const EMR = () => {
                     "dd MMMM yyyy HH:mm:ss"
                   )}
                 </p>
+                
                 <div className="animated-payment-card">
                   <div className="card-content">
-                    <img
-                      src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2F1ux4tcviQH-AvUM6ziy_sQ-removebg-preview.png?alt=media&token=e38bf7eb-dd73-4665-b532-725c6c2cb536"
-                      alt="Icon"
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        marginRight: "10px",
-                      }}
-                    />
-                    <p>
-                      History Payment: Rp.{" "}
-                      {treatment.treatmentCost
-                        ? treatment.treatmentCost.toLocaleString()
-                        : "N/A"}
-                    </p>
+                    <div className="coin-stack-wrapper">
+                      <FaCoins className="coin-icon-main" />
+                      <span className="coin-sparkle">✨</span>
+                    </div>
+                    <div className="payment-info">
+                      <p className="payment-label">History Payment</p>
+                      <p className="payment-amount">
+                        Rp. {treatment.treatmentCost
+                          ? treatment.treatmentCost.toLocaleString()
+                          : "N/A"}
+                      </p>
+                    </div>
                   </div>
                 </div>
+
                 <Link
                   to={`/payment-detail/${id}/${treatment.id}`}
                   state={{
