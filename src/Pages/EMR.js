@@ -18,7 +18,6 @@ const EMR = () => {
   const [allergies, setAllergies] = useState("");
   const [healthHistory, setHealthHistory] = useState("");
   const [zoomedImage, setZoomedImage] = useState(null);
-  const [latestIMT, setLatestIMT] = useState(null);
 
   const isEditable = (timestamp) => {
     const hoursDifference = differenceInHours(new Date(), new Date(timestamp));
@@ -29,16 +28,18 @@ const EMR = () => {
     navigate("/edithistory");
   };
 
-  const getLatestIMT = (treatmentsData) => {
-    if (!treatmentsData || treatmentsData.length === 0) return null;
-    
-    const treatmentsWithIMT = treatmentsData.filter(t => t.imt && t.imt.value);
-    if (treatmentsWithIMT.length === 0) return null;
-    
-    const sorted = treatmentsWithIMT.sort((a, b) => b.timestamp - a.timestamp);
-    return sorted[0].imt;
+  // Fungsi untuk mendapatkan warna berdasarkan kategori IMT
+  const getIMTColor = (category) => {
+    switch(category) {
+      case 'Normal': return '#28a745';
+      case 'Kurus': return '#ffc107';
+      case 'Gemuk': return '#ff9800';
+      case 'Obesitas': return '#dc3545';
+      default: return '#6c757d';
+    }
   };
 
+  // Atur tab berdasarkan path URL saat halaman dimuat
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (currentPath.includes("assesment")) setValue(0);
@@ -75,23 +76,15 @@ const EMR = () => {
     setValue(newValue);
   };
 
-  const getIMTColor = (category) => {
-    switch(category) {
-      case 'Normal': return '#28a745';
-      case 'Kurus': return '#ffc107';
-      case 'Gemuk': return '#ff9800';
-      case 'Obesitas': return '#dc3545';
-      default: return '#6c757d';
-    }
-  };
-
   useEffect(() => {
+    // Mengambil data pasien
     axios
       .get(
         `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}.json`
       )
       .then((response) => {
         setPatientDetails(response.data);
+
         if (response.data) {
           setAllergies(response.data.Allergies || "");
           setHealthHistory(response.data.HealthHistory || "");
@@ -101,6 +94,7 @@ const EMR = () => {
         console.error("Terjadi kesalahan:", error);
       });
 
+    // Mengambil data riwayat pengobatan
     axios
       .get(
         `https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients/${id}/medical_records.json`
@@ -111,9 +105,6 @@ const EMR = () => {
           ...response.data[recordId],
         }));
         setTreatments(treatmentsArray.reverse());
-        
-        const latestIMTData = getLatestIMT(treatmentsArray);
-        setLatestIMT(latestIMTData);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan:", error);
@@ -163,9 +154,6 @@ const EMR = () => {
           (treatment) => treatment.id !== treatmentId
         );
         setTreatments(updatedTreatments);
-        
-        const latestIMTData = getLatestIMT(updatedTreatments);
-        setLatestIMT(latestIMTData);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan:", error);
@@ -182,8 +170,8 @@ const EMR = () => {
       <div className="emr-container">
         <div className="patient-details">
           {patientDetails && (
-            <div class="biodata-card">
-              <div class="emotion-icon">😊</div>
+            <div className="biodata-card">
+              <div className="emotion-icon">😊</div>
               <div className="edit-bio-wrapper">
                 <Link to={`/emr/${id}/edit-bio`}>
                   <img
@@ -201,46 +189,6 @@ const EMR = () => {
               <p>No Wa: {patientDetails.whatsappNumber}</p>
               <p>Alergi: {allergies}</p>
               <p>Riwayat Kesehatan: {healthHistory}</p>
-              
-              {latestIMT && latestIMT.value && (
-                <div className="imt-latest-display" style={{
-                  marginTop: '6px',
-                  padding: '4px 10px',
-                  borderRadius: '4px',
-                  backgroundColor: '#f8f9fa',
-                  borderLeft: `3px solid ${getIMTColor(latestIMT.category)}`,
-                  fontSize: '12px'
-                }}>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '6px',
-                    flexWrap: 'wrap'
-                  }}>
-                    <span style={{ fontSize: '12px' }}>📊</span>
-                    <span style={{ fontWeight: 'bold', fontSize: '12px' }}>IMT:</span>
-                    <strong style={{ fontSize: '13px' }}>{latestIMT.value}</strong>
-                    <span style={{ 
-                      color: getIMTColor(latestIMT.category),
-                      fontWeight: 'bold',
-                      padding: '0px 8px',
-                      borderRadius: '10px',
-                      backgroundColor: `${getIMTColor(latestIMT.category)}20`,
-                      fontSize: '10px'
-                    }}>
-                      {latestIMT.category}
-                    </span>
-                    <span style={{ 
-                      fontSize: '9px', 
-                      color: '#6c757d',
-                      marginLeft: 'auto'
-                    }}>
-                      terbaru
-                    </span>
-                  </div>
-                </div>
-              )}
-
               <div className="button-wrapper">
                 <Link to={`/emr/${id}/edit-health`} className="purple-button">
                   Alergi & Riwayat Kesehatan
@@ -267,9 +215,15 @@ const EMR = () => {
             >
               <Tab label="Assesment Awal" className="responsive-tab" />
               <Tab label="CPPT ~ SOAP" className="responsive-tab" />
-              <Tab label="Edukasi Pemasangan Infus" className="responsive-tab" />
+              <Tab
+                label="Edukasi Pemasangan Infus"
+                className="responsive-tab"
+              />
               <Tab label="Persetujuan Sunat" className="responsive-tab" />
-              <Tab label="Penolakan Tindakan Medis" className="responsive-tab" />
+              <Tab
+                label="Penolakan Tindakan Medis"
+                className="responsive-tab"
+              />
               <Tab label="Surat Delegasi" className="responsive-tab" />
             </Tabs>
           </div>
@@ -294,10 +248,12 @@ const EMR = () => {
                   onClick={() => confirmDelete(treatment.id)}
                 />
 
-                <Link to={`/emr/${id}/update-treatment/${treatment.id}`}
-                state={{
-                  timestamp: treatment.timestamp,
-                }}>
+                <Link 
+                  to={`/emr/${id}/update-treatment/${treatment.id}`}
+                  state={{
+                    timestamp: treatment.timestamp,
+                  }}
+                >
                   <button
                     style={{
                       backgroundColor: "#007BFF",
@@ -378,33 +334,33 @@ const EMR = () => {
                   Pemeriksaan Fisik: {treatment.condition_physical_examination}
                 </p>
                 <p>Tanda-Tanda Vital:</p>
-                <p>SystolicBloodPressure: {treatment.systolicBloodPressure}</p>
-                <p>DiastolicBloodPressure: {treatment.diastolicBloodPressure}</p>
-                <p>HeartRate: {treatment.heartRate}</p>
-                <p>BodyTemperature: {treatment.bodyTemperature}</p>
-                <p>RespiratoryRate: {treatment.respiratoryRate}</p>
+                <p>Systolic Blood Pressure: {treatment.systolicBloodPressure}</p>
+                <p>
+                  Diastolic Blood Pressure: {treatment.diastolicBloodPressure}
+                </p>
+                <p>Heart Rate: {treatment.heartRate}</p>
+                <p>Body Temperature: {treatment.bodyTemperature}</p>
+                <p>Respiratory Rate: {treatment.respiratoryRate}</p>
                 <p>Body Weight: {treatment.bodyWeight}</p>
                 <p>Body Height: {treatment.bodyHeight || 'Tidak diisi'}</p>
                 
                 {treatment.imt && treatment.imt.value && (
                   <div className="imt-treatment-display" style={{
-                    marginTop: '4px',
-                    padding: '3px 8px',
-                    borderRadius: '3px',
-                    backgroundColor: '#e9ecef',
-                    fontSize: '11px',
-                    display: 'inline-block'
+                    marginTop: '5px',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    backgroundColor: '#e9ecef'
                   }}>
-                    <span style={{ marginRight: '4px' }}>📊</span>
-                    IMT: <strong>{treatment.imt.value}</strong>
-                    <span style={{ 
-                      color: getIMTColor(treatment.imt.category),
-                      fontWeight: 'bold',
-                      marginLeft: '4px',
-                      fontSize: '10px'
-                    }}>
-                      {treatment.imt.category}
-                    </span>
+                    <p style={{ margin: '0' }}>
+                      IMT: <strong>{treatment.imt.value}</strong> - 
+                      <span style={{ 
+                        color: getIMTColor(treatment.imt.category),
+                        fontWeight: 'bold',
+                        marginLeft: '5px'
+                      }}>
+                        {treatment.imt.category}
+                      </span>
+                    </p>
                   </div>
                 )}
                 
