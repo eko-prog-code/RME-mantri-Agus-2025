@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { FaTimes, FaPlus, FaUserMd, FaHome, FaCoins } from "react-icons/fa";
+import { FaTimes, FaPlus, FaUserMd, FaHome, FaCoins, FaPencilAlt } from "react-icons/fa";
 import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
@@ -176,6 +176,16 @@ const EMR = () => {
             <div className="biodata-card">
               <div className="biodata-content">
                 <div className="emotion-icon">😊</div>
+                
+                {/* Edit Bio Button dengan Icon Pencil dan Teks */}
+                <div className="edit-bio-wrapper">
+                  <Link to={`/emr/${id}/edit-bio`} className="edit-bio-link">
+                    <div className="edit-bio-button">
+                      <FaPencilAlt className="edit-bio-icon" />
+                      <span className="edit-bio-text">Edit BioData Pasien</span>
+                    </div>
+                  </Link>
+                </div>
                 
                 {/* Rectangle untuk teks Bio Data */}
                 <div className="biodata-rectangle">
