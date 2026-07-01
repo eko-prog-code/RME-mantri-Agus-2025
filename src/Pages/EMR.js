@@ -6,6 +6,7 @@ import { format, differenceInHours } from "date-fns";
 import { Tabs, Tab } from "@mui/material";
 import "./EMR.css";
 import EditIconImg from '../Images/TRUE LETTER.png';
+import BiodataBgImg from '../Images/BioData-Img.webp';
 
 const EMR = () => {
   const { id } = useParams();
@@ -171,34 +172,48 @@ const EMR = () => {
       <div className="emr-container">
         <div className="patient-details">
           {patientDetails && (
-            <div className="biodata-card">
-              <div className="emotion-icon">😊</div>
-              <div className="edit-bio-wrapper">
-                <Link to={`/emr/${id}/edit-bio`}>
-                  <img
-                  src={EditIconImg}
-                  alt="Edit Bio"
-                  className="EditBio-unix23288"
-                />
-                </Link>
-              </div>
-              <p>Nama : {patientDetails.name}</p>
-              <p>Tanggal Lahir: {patientDetails.birthDate}</p>
-              <p>No KTP: {patientDetails.identifier}</p>
-              <p>No Rekam Medis: {patientDetails.number_medical_records}</p>
-              <p>Alamat: {patientDetails.patientAddress}</p>
-              <p>No Wa: {patientDetails.whatsappNumber}</p>
-              <p>Alergi: {allergies}</p>
-              <p>Riwayat Kesehatan: {healthHistory}</p>
-              <div className="button-wrapper">
-                <Link to={`/emr/${id}/edit-health`} className="purple-button">
-                  Alergi & Riwayat Kesehatan
-                </Link>
-              </div>
-              <div className="button-wrapper">
-                <button className="red-button" onClick={confirmDeletePatient}>
-                  Delete Pasien Permanent
-                </button>
+            <div 
+              className="biodata-card"
+              style={{
+                backgroundImage: `url(${BiodataBgImg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                minHeight: '600px',
+                position: 'relative',
+                padding: '20px',
+                borderRadius: '12px'
+              }}
+            >
+              <div className="biodata-content">
+                <div className="emotion-icon">😊</div>
+                <div className="edit-bio-wrapper">
+                  <Link to={`/emr/${id}/edit-bio`}>
+                    <img
+                      src={EditIconImg}
+                      alt="Edit Bio"
+                      className="EditBio-unix23288"
+                    />
+                  </Link>
+                </div>
+                <p>Nama : {patientDetails.name}</p>
+                <p>Tanggal Lahir: {patientDetails.birthDate}</p>
+                <p>No KTP: {patientDetails.identifier}</p>
+                <p>No Rekam Medis: {patientDetails.number_medical_records}</p>
+                <p>Alamat: {patientDetails.patientAddress}</p>
+                <p>No Wa: {patientDetails.whatsappNumber}</p>
+                <p>Alergi: {allergies}</p>
+                <p>Riwayat Kesehatan: {healthHistory}</p>
+                <div className="button-wrapper">
+                  <Link to={`/emr/${id}/edit-health`} className="purple-button">
+                    Alergi & Riwayat Kesehatan
+                  </Link>
+                </div>
+                <div className="button-wrapper">
+                  <button className="red-button" onClick={confirmDeletePatient}>
+                    Delete Pasien Permanent
+                  </button>
+                </div>
               </div>
             </div>
           )}
