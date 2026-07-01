@@ -21,6 +21,26 @@ const ExcelHarian = () => {
             if (patientData.medical_records) {
               Object.entries(patientData.medical_records).forEach(
                 ([recordId, recordData]) => {
+                  // Hitung IMT jika data berat dan tinggi tersedia
+                  let imtValue = "N/A";
+                  let imtCategory = "N/A";
+                  
+                  if (recordData.bodyWeight && recordData.bodyHeight) {
+                    const weight = parseFloat(recordData.bodyWeight);
+                    const height = parseFloat(recordData.bodyHeight) / 100; // Konversi cm ke meter
+                    
+                    if (!isNaN(weight) && !isNaN(height) && weight > 0 && height > 0) {
+                      const imt = weight / (height * height);
+                      imtValue = imt.toFixed(1);
+                      
+                      // Tentukan kategori IMT
+                      if (imt < 18.5) imtCategory = 'Kurus';
+                      else if (imt >= 18.5 && imt < 25) imtCategory = 'Normal';
+                      else if (imt >= 25 && imt < 30) imtCategory = 'Gemuk';
+                      else if (imt >= 30) imtCategory = 'Obesitas';
+                    }
+                  }
+
                   allRecords.push({
                     patient_name: patientData.name || "N/A",
                     patient_address: patientData.patientAddress || "N/A",
@@ -41,6 +61,11 @@ const ExcelHarian = () => {
                       bodyTemperature: recordData.bodyTemperature || "N/A",
                       respiratoryRate: recordData.respiratoryRate || "N/A",
                       bodyWeight: recordData.bodyWeight || "N/A",
+                      bodyHeight: recordData.bodyHeight || "N/A", // Tambahkan Tinggi Badan
+                      imt: {
+                        value: imtValue,
+                        category: imtCategory
+                      }
                     },
                     timestamp: recordData.timestamp
                       ? new Date(recordData.timestamp)
@@ -87,13 +112,16 @@ const ExcelHarian = () => {
         "Nadi": record.ttv?.heartRate || "N/A",
         "Suhu Badan": record.ttv?.bodyTemperature || "N/A",
         "Respiratory Rate": record.ttv?.respiratoryRate || "N/A",
-        "Berat Badan": record.ttv?.bodyWeight || "N/A",
+        "Berat Badan (kg)": record.ttv?.bodyWeight || "N/A",
+        "Tinggi Badan (cm)": record.ttv?.bodyHeight || "N/A", // Tambahkan kolom Tinggi Badan
+        "IMT": record.ttv?.imt?.value || "N/A", // Tambahkan kolom IMT
+        "Kategori IMT": record.ttv?.imt?.category || "N/A", // Tambahkan kolom Kategori IMT
         "Terapi Obat": record.terapi_obat,
         "Timestamp": record.timestamp?.toLocaleString() || "N/A",
       };
     });
   
-    const worksheet = XLSX.utils.json_to_sheet(flattenedRecords); // Use the flattened data
+    const worksheet = XLSX.utils.json_to_sheet(flattenedRecords);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Medical Records");
   
@@ -119,19 +147,22 @@ const ExcelHarian = () => {
   return (
     <div className="wa-container">
       <h1>Medical Records</h1>
-      <label>
-        Filter Tanggal:
-        <input
-          type="date"
-          value={filterDate}
-          onChange={(e) => setFilterDate(e.target.value)}
-          className="wa-date-input"
-          placeholder="Pilih tanggal..."
-        />
-      </label>
-      <button onClick={exportToExcel} className="wa-export-button">
-        Download Excel
-      </button>
+      <div className="wa-filter-section">
+        <label>
+          Filter Tanggal:
+          <input
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+            className="wa-date-input"
+            placeholder="Pilih tanggal..."
+          />
+        </label>
+        <button onClick={exportToExcel} className="wa-export-button">
+          Download Excel
+        </button>
+      </div>
+      
       <div className="wa-table-wrapper">
         <table className="wa-data-table">
           <thead>
@@ -142,7 +173,7 @@ const ExcelHarian = () => {
               <th>Diagnosa Medis</th>
               <th>Keluhan</th>
               <th>Pemeriksaan Fisik</th>
-              <th>TTV</th>
+              <th>TTV & Antropometri</th>
               <th>Terapi Obat</th>
               <th>Timestamp</th>
             </tr>
@@ -203,7 +234,30 @@ const ExcelHarian = () => {
                   <p>
                     <span className="wa-ttv-label">BB:</span>
                     <span className="wa-ttv-data">
-                      {record.ttv?.bodyWeight || "N/A"}
+                      {record.ttv?.bodyWeight || "N/A"} kg
+                    </span>
+                  </p>
+                  <p>
+                    <span className="wa-ttv-label">TB:</span>
+                    <span className="wa-ttv-data">
+                      {record.ttv?.bodyHeight || "N/A"} cm
+                    </span>
+                  </p>
+                  <p>
+                    <span className="wa-ttv-label">IMT:</span>
+                    <span 
+                      className="wa-ttv-data"
+                      style={{
+                        fontWeight: 'bold',
+                        color: record.ttv?.imt?.category === 'Normal' ? '#28a745' :
+                               record.ttv?.imt?.category === 'Kurus' ? '#ffc107' :
+                               record.ttv?.imt?.category === 'Gemuk' ? '#ffc107' :
+                               record.ttv?.imt?.category === 'Obesitas' ? '#dc3545' :
+                               'inherit'
+                      }}
+                    >
+                      {record.ttv?.imt?.value || "N/A"} 
+                      {record.ttv?.imt?.category !== "N/A" && ` (${record.ttv?.imt?.category})`}
                     </span>
                   </p>
                 </td>
