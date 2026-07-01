@@ -19,6 +19,8 @@ import './Home.css';
 import PasienBaruImg from '../Images/PasienBaru.png';
 import PasienLamaImg from '../Images/PasienLama.png';
 import FilterEditImg from '../Images/filter&edit.png';
+import ExcelKunjunganHarianImg from '../Images/Excel-Kunjungan-Harian.png';
+import RevenueImg from '../Images/Revenue.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -172,20 +174,20 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/editHistory">
                     <img
-                    src={FilterEditImg}
-                    alt="EditHistory"
-                    className="image-button-ServiceSetting"
-                    />
+                        src={FilterEditImg}
+                        alt="EditHistory"
+                        className="image-button-ServiceSetting"
+                        />
                 </Link>
             </div>
                         
             <div className="image-button-container-ServiceSetting">
                 <Link to="/excelHarian">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FExcel-Kunungan-Harian.png?alt=media&token=217eaba3-0330-4232-8432-e23fd45afdb0"
+                        src={ExcelKunjunganHarianImg}
                         alt="Excel Kunjungan Harian"
                         className="image-button-ServiceSetting"
-                    />
+                        />
                 </Link>
             </div>
 
@@ -193,7 +195,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/revenue">
                     <img
-                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FRevenue.png?alt=media&token=469d6f41-60fe-4cb8-b0f4-4b2659567378"
+                        src={RevenueImg}
                         alt="Service Setting"
                         className="image-button-ServiceSetting"
                     />
