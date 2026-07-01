@@ -18,14 +18,6 @@ import './Home.css';
 // Import gambar dari lokal
 import PasienBaruImg from '../Images/PasienBaru.png';
 import PasienLamaImg from '../Images/PasienLama.png';
-import FilterEditImg from '../Images/filter&edit.png';
-import ExcelKunjunganHarianImg from '../Images/Excel-Kunungan-Harian.png';
-import RevenueImg from '../Images/Revenue.png';
-import DocImg from '../Images/Doc.png';
-import ListBelanjaObatImg from '../Images/ListBelanjaObatdan Alkes.png';
-import SatuSehatImg from '../Images/Integrasi Satu Sehat.png';
-import KunjunganImg from '../Images/Kunjungan.png';
-import WaImg from '../Images/Export Contact Pasien.png';
 
 const Home = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -179,7 +171,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/editHistory">
                     <img
-                        src={FilterEditImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2Ffilter%26edit.png?alt=media&token=797cb1bf-0912-466e-8fb2-c1100ab16a60"
                         alt="EditHistory"
                         className="image-button-ServiceSetting"
                     />
@@ -188,7 +180,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/excelHarian">
                     <img
-                        src={ExcelKunjunganHarianImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FExcel-Kunungan-Harian.png?alt=media&token=217eaba3-0330-4232-8432-e23fd45afdb0"
                         alt="Excel Kunjungan Harian"
                         className="image-button-ServiceSetting"
                     />
@@ -199,7 +191,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/revenue">
                     <img
-                        src={RevenueImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FRevenue.png?alt=media&token=469d6f41-60fe-4cb8-b0f4-4b2659567378"
                         alt="Service Setting"
                         className="image-button-ServiceSetting"
                     />
@@ -208,7 +200,7 @@ const Home = () => {
 
             <div className="image-button-container-ServiceSetting">
                 <img
-                    src={DocImg}
+                    src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FDoc.png?alt=media&token=6d09a803-e326-4daf-8d80-8fa436af78b2"
                     alt="Service Setting"
                     className="image-button-ServiceSetting"
                     onClick={() => window.open('https://medic-tech-plus.vercel.app/', '_blank')}
@@ -219,7 +211,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/list-belanja-obat">
                     <img
-                        src={ListBelanjaObatImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/emr-q-b0576.appspot.com/o/ListBelanjaObatdan%20Alkes.png?alt=media&token=3c1f8fa1-dc86-4727-8f38-2c585eb53ebc"
                         alt="List Belanja Obat"
                         className="image-button-ServiceSetting"
                     />
@@ -229,7 +221,7 @@ const Home = () => {
             <div className="image-button-container-SatuSehat">
                 <Link to="/satusehat">
                     <img
-                        src={SatuSehatImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2FIntegrasi%20Satu%20Sehat.png?alt=media&token=50da787c-5b95-482b-a6ff-33ef99ab9215"
                         alt="Satu Sehat Integrate"
                         className="image-button-SatuSehat"
                     />
@@ -239,7 +231,7 @@ const Home = () => {
             <div className="image-button-container-ServiceSetting">
                 <Link to="/kunjungan">
                     <img
-                        src={KunjunganImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/praktek-mandiri-mantri-agus.appspot.com/o/IconPatient%60s%2FKunjungan.png?alt=media&token=5ab0b7ac-0217-4006-b356-5132399b9ff4"
                         alt="Kunjungan"
                         className="image-button-ServiceSetting"
                     />
@@ -249,7 +241,7 @@ const Home = () => {
             <div className="image-button-container-SatuSehat">
                 <Link to="/wa">
                     <img
-                        src={WaImg}
+                        src="https://firebasestorage.googleapis.com/v0/b/rme-shazfa-mounira.appspot.com/o/HomeButton%2FExport%20Contact%20Pasien.png?alt=media&token=dd696862-78b6-49bf-a401-02425a1d489d"
                         alt="wa blast"
                         className="image-button-SatuSehat"
                     />
@@ -295,6 +287,7 @@ const Home = () => {
                                         }}
                                     />
                                     
+                                    {/* Form Alamat dengan style sama persis dengan input nama */}
                                     <input
                                         type="text"
                                         className="new-patient-input"
