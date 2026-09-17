@@ -111,9 +111,53 @@ function EditHistory() {
     }
   };
 
-  const toggleModal = (type) => {
+  const calculateNextMedicalRecordNumber = (patientData) => {
+    if (!patientData || typeof patientData !== "object") {
+      return "000001";
+    }
+    let maxNumber = 0;
+    const list = Array.isArray(patientData) ? patientData : Object.values(patientData);
+    list.forEach((patient) => {
+      if (!patient) return;
+      const mrn = patient.number_medical_records || patient.medicalRecordNumber;
+      if (mrn) {
+        const cleanStr = String(mrn).trim();
+        const parsed = parseInt(cleanStr, 10);
+        if (!isNaN(parsed) && parsed < 1000000 && cleanStr.length <= 8) {
+          if (parsed > maxNumber) {
+            maxNumber = parsed;
+          }
+        }
+      }
+    });
+    const nextNumber = maxNumber + 1;
+    return String(nextNumber).padStart(6, "0");
+  };
+
+  const toggleModal = async (type) => {
     setModalType(type);
     setIsModalOpen(true);
+    if (type === "register") {
+      if (patients && patients.length > 0) {
+        setNewPatientData((prev) => ({
+          ...prev,
+          medicalRecordNumber: calculateNextMedicalRecordNumber(patients),
+        }));
+      }
+      try {
+        const response = await axios.get(
+          "https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json"
+        );
+        if (response.data) {
+          setNewPatientData((prev) => ({
+            ...prev,
+            medicalRecordNumber: calculateNextMedicalRecordNumber(response.data),
+          }));
+        }
+      } catch (err) {
+        console.error("Gagal memuat rekam medis terakhir:", err);
+      }
+    }
   };
 
   const submitNewPatient = async () => {
@@ -126,7 +170,9 @@ function EditHistory() {
         "https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json",
         {
           ...newPatientData,
+          number_medical_records: newPatientData.medicalRecordNumber,
           birthDate: selectedDate?.toISOString().split("T")[0] || "",
+          timestamp: new Date().toISOString(),
         }
       );
       const newPatientId = response.data.name;
