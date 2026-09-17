@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaUser, FaIdCard } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
@@ -32,6 +32,10 @@ const Home = () => {
     const [isNewPatient, setIsNewPatient] = useState(true);
     const [patients, setPatients] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
+    const [searchMethod, setSearchMethod] = useState('name'); // 'name' atau 'mrn'
+    const [searchNameKeyword, setSearchNameKeyword] = useState('');
+    const [searchMrnKeyword, setSearchMrnKeyword] = useState('');
+    const [isLoadingPatients, setIsLoadingPatients] = useState(false);
     const [newPatientData, setNewPatientData] = useState({
         name: '',
         birthDate: '',
@@ -52,6 +56,60 @@ const Home = () => {
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: currentYear - 1950 + 1 }, (_, index) => 1950 + index).reverse();
 
+    const calculateNextMedicalRecordNumber = (patientData) => {
+        if (!patientData || typeof patientData !== 'object') {
+            return '000001';
+        }
+        let maxNumber = 0;
+        Object.values(patientData).forEach((patient) => {
+            if (!patient) return;
+            const mrn = patient.number_medical_records || patient.medicalRecordNumber;
+            if (mrn) {
+                const cleanStr = String(mrn).trim();
+                const parsed = parseInt(cleanStr, 10);
+                // Standard 6-digit sequential record numbers (ignore accidental 10+ digit NIK typos)
+                if (!isNaN(parsed) && parsed < 1000000 && cleanStr.length <= 8) {
+                    if (parsed > maxNumber) {
+                        maxNumber = parsed;
+                    }
+                }
+            }
+        });
+        const nextNumber = maxNumber + 1;
+        return String(nextNumber).padStart(6, '0');
+    };
+
+    const handleOpenNewPatientModal = async () => {
+        setFormVisible(true);
+        setIsNewPatient(true);
+
+        // Jika data patients sudah ada di state, langsung set agar pengguna melihat nomor terbaru tanpa delay
+        if (patients && Object.keys(patients).length > 0) {
+            const nextMrn = calculateNextMedicalRecordNumber(patients);
+            setNewPatientData((prev) => ({
+                ...prev,
+                medicalRecordNumber: nextMrn,
+            }));
+        }
+
+        // Ambil data terbaru langsung dari Realtime Database Firebase untuk memastikan nilai nomor tertinggi yang paling mutakhir
+        try {
+            const response = await axios.get(
+                'https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json'
+            );
+            if (response.data) {
+                setPatients(response.data);
+                const freshNextMrn = calculateNextMedicalRecordNumber(response.data);
+                setNewPatientData((prev) => ({
+                    ...prev,
+                    medicalRecordNumber: freshNextMrn,
+                }));
+            }
+        } catch (error) {
+            console.error('Terjadi kesalahan saat memuat data pasien terbaru dari Firebase:', error);
+        }
+    };
+
     const submitNewPatient = () => {
         const newPatient = {
             name: newPatientData.name,
@@ -71,7 +129,7 @@ const Home = () => {
                     name: '', 
                     birthDate: '', 
                     identifier: '', 
-                    number_medical_records: '', 
+                    medicalRecordNumber: '', 
                     patientAddress: '',
                     whatsappNumber: '' 
                 });
@@ -86,32 +144,109 @@ const Home = () => {
             });
     };
 
-    const searchPatients = () => {
-        axios
-            .get('https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json')
-            .then((response) => {
-                const patientData = response.data;
-
-                const filteredPatients = Object.keys(patientData).filter((patientId) =>
-                    patientData[patientId].name.toLowerCase().includes(searchKeyword.toLowerCase())
-                );
-
-                const filteredPatientData = filteredPatients.reduce((filteredData, patientId) => {
-                    filteredData[patientId] = patientData[patientId];
-                    return filteredData;
-                }, {});
-
-                setPatients(filteredPatientData);
-                setShowFilteredPatients(filteredPatients.length > 0);
-            })
-            .catch((error) => {
-                console.error('Terjadi kesalahan:', error);
+    // Data pasien yang diformat untuk pencarian cepat dan akurat di memori
+    const patientList = useMemo(() => {
+        if (!patients || typeof patients !== 'object') return [];
+        return Object.entries(patients)
+            .filter(([id, p]) => p && typeof p === 'object')
+            .map(([id, p]) => {
+                const rawMrn = p.number_medical_records || p.medicalRecordNumber || '';
+                const cleanMrn = String(rawMrn).trim();
+                const numericMrn = parseInt(cleanMrn.replace(/\D/g, ''), 10);
+                return {
+                    id,
+                    name: String(p.name || '').trim(),
+                    birthDate: p.birthDate || '',
+                    identifier: p.identifier || '',
+                    mrn: cleanMrn,
+                    numericMrn: isNaN(numericMrn) ? null : numericMrn,
+                    address: p.patientAddress || '',
+                    whatsapp: p.whatsappNumber || '',
+                };
             });
+    }, [patients]);
+
+    // Filter cepat dan presisi untuk 2 metode: Nama Pasien & Nomor Rekam Medis
+    const filteredPatientsList = useMemo(() => {
+        if (searchMethod === 'name') {
+            const query = searchNameKeyword.trim().toLowerCase();
+            if (!query) return [];
+            const terms = query.split(/\s+/).filter(Boolean);
+            return patientList.filter((p) => {
+                const pName = p.name.toLowerCase();
+                return terms.every((term) => pName.includes(term));
+            });
+        } else {
+            // Pencarian berdasarkan Nomor Rekam Medis (medicalRecordNumber)
+            const query = searchMrnKeyword.trim();
+            if (!query) return [];
+            const queryDigits = query.replace(/\D/g, '');
+            const queryNum = parseInt(queryDigits, 10);
+
+            return patientList.filter((p) => {
+                // 1. Pencocokan langsung teks nomor rekam medis (case-insensitive)
+                if (p.mrn.toLowerCase().includes(query.toLowerCase())) {
+                    return true;
+                }
+                // 2. Pencocokan numerik presisi (misal ketik 2740 cocok dengan 002740)
+                if (!isNaN(queryNum) && p.numericMrn !== null) {
+                    if (p.numericMrn === queryNum) return true;
+                    const pDigits = p.mrn.replace(/\D/g, '');
+                    if (queryDigits.length >= 2 && pDigits.includes(queryDigits)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+    }, [patientList, searchMethod, searchNameKeyword, searchMrnKeyword]);
+
+    const activeKeyword = searchMethod === 'name' ? searchNameKeyword.trim() : searchMrnKeyword.trim();
+
+    const handleOpenOldPatientModal = async () => {
+        setFormVisible(true);
+        setIsNewPatient(false);
+        setSearchNameKeyword('');
+        setSearchMrnKeyword('');
+        setSearchMethod('name');
+
+        // Pastikan data pasien selalu sinkron dan termutakhir
+        if (!patients || Object.keys(patients).length === 0) {
+            setIsLoadingPatients(true);
+        }
+        try {
+            const response = await axios.get(
+                'https://praktek-mandiri-mantri-agus-default-rtdb.asia-southeast1.firebasedatabase.app/patients.json'
+            );
+            if (response.data) {
+                setPatients(response.data);
+            }
+        } catch (error) {
+            console.error('Terjadi kesalahan memuat data pasien:', error);
+        } finally {
+            setIsLoadingPatients(false);
+        }
+    };
+
+    const searchPatients = () => {
+        // Didukung melalui filteredPatientsList yang cepat dan reaktif
     };
 
     const closeModal = () => {
         setFormVisible(false);
         setModalOpen(false);
+        setSearchNameKeyword('');
+        setSearchMrnKeyword('');
+        setNewPatientData({ 
+            name: '', 
+            birthDate: '', 
+            identifier: '', 
+            medicalRecordNumber: '', 
+            patientAddress: '',
+            whatsappNumber: '' 
+        });
+        setSelectedDate(null);
+        setSelectedYear('');
     };
 
     useEffect(() => {
@@ -156,20 +291,14 @@ const Home = () => {
                     src={PasienBaruImg}
                     alt="Pasien Baru"
                     className="image-button"
-                    onClick={() => {
-                        setFormVisible(true);
-                        setIsNewPatient(true);
-                    }}
+                    onClick={handleOpenNewPatientModal}
                 />
 
                 <img
                     src={PasienLamaImg}
                     alt="Pasien Lama"
                     className="image-button"
-                    onClick={() => {
-                        setFormVisible(true);
-                        setIsNewPatient(false);
-                    }}
+                    onClick={handleOpenOldPatientModal}
                 />
             </div>
 
@@ -335,40 +464,160 @@ const Home = () => {
                                 </button>
                             </div>
                         ) : (
-                            <div className="modal-content">
-                                <input
-                                    type="text"
-                                    className="search-input"
-                                    placeholder="Cari Nama Pasien"
-                                    value={searchKeyword}
-                                    onChange={(e) => {
-                                        setSearchKeyword(e.target.value);
-                                        searchPatients();
-                                    }}
-                                />
-                                <button className="search-button" onClick={searchPatients}>
-                                    Cari
-                                </button>
+                            <div className="old-patient-modal-container">
+                                <h3 className="old-patient-modal-title">Cari Data Pasien Lama</h3>
 
-                                {showFilteredPatients && (
-                                    <div className="name-filter">
-                                        <ul>
-                                            {Object.keys(patients).map((patientId) => (
-                                                <li key={patientId} className="patient-list-item">
-                                                    <div className="patient-info">
-                                                        {patients[patientId].name} - {patients[patientId].birthDate}
-                                                    </div>
-                                                    <button
-                                                        className="view-emr-button"
-                                                        onClick={() => navigate(`/emr/${patientId}`)}
-                                                    >
-                                                        View EMR
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                {/* Pilihan 2 Metode Pencarian */}
+                                <div className="old-patient-tabs">
+                                    <button
+                                        type="button"
+                                        className={`old-patient-tab ${searchMethod === 'name' ? 'active' : ''}`}
+                                        onClick={() => setSearchMethod('name')}
+                                    >
+                                        <FaUser style={{ marginRight: '6px' }} />
+                                        Nama Pasien
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`old-patient-tab ${searchMethod === 'mrn' ? 'active' : ''}`}
+                                        onClick={() => setSearchMethod('mrn')}
+                                    >
+                                        <FaIdCard style={{ marginRight: '6px' }} />
+                                        No. Rekam Medis
+                                    </button>
+                                </div>
+
+                                {/* Form Input Berdasarkan Metode Terpilih */}
+                                {searchMethod === 'name' ? (
+                                    <div className="search-method-section">
+                                        <div className="search-input-wrapper">
+                                            <input
+                                                type="text"
+                                                className="search-input-modern"
+                                                placeholder="Ketik nama pasien (contoh: Putri, Agus)..."
+                                                value={searchNameKeyword}
+                                                onChange={(e) => setSearchNameKeyword(e.target.value)}
+                                                autoFocus
+                                            />
+                                            {searchNameKeyword && (
+                                                <button
+                                                    type="button"
+                                                    className="clear-input-btn"
+                                                    onClick={() => setSearchNameKeyword('')}
+                                                    title="Hapus pencarian"
+                                                >
+                                                    <FaTimes />
+                                                </button>
+                                            )}
+                                        </div>
+                                        <p className="search-hint-text">
+                                            * Pencarian cepat otomatis memfilter nama pasien saat diketik.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="search-method-section">
+                                        <div className="search-input-wrapper">
+                                            <input
+                                                type="text"
+                                                className="search-input-modern"
+                                                placeholder="Masukkan No. Rekam Medis (contoh: 002740 atau 2740)..."
+                                                value={searchMrnKeyword}
+                                                onChange={(e) => setSearchMrnKeyword(e.target.value)}
+                                                autoFocus
+                                            />
+                                            {searchMrnKeyword && (
+                                                <button
+                                                    type="button"
+                                                    className="clear-input-btn"
+                                                    onClick={() => setSearchMrnKeyword('')}
+                                                    title="Hapus input"
+                                                >
+                                                    <FaTimes />
+                                                </button>
+                                            )}
+                                        </div>
+                                        <p className="search-hint-text">
+                                            * Tips: Bisa masukkan format 6 digit (<strong>002740</strong>) atau nomor urutnya saja (<strong>2740</strong>).
+                                        </p>
                                     </div>
                                 )}
+
+                                {/* Hasil Pencarian Cepat & Akurat */}
+                                <div className="search-results-container">
+                                    {isLoadingPatients ? (
+                                        <div className="search-status-message">
+                                            <p>Sedang sinkronisasi data pasien...</p>
+                                        </div>
+                                    ) : activeKeyword === '' ? (
+                                        <div className="search-status-message">
+                                            <p className="search-prompt-text">
+                                                {searchMethod === 'name'
+                                                    ? 'Silakan ketik nama pasien di kolom pencarian di atas.'
+                                                    : 'Silakan masukkan nomor rekam medis pasien di kolom di atas.'}
+                                            </p>
+                                            <span className="search-count-badge">
+                                                Total {patientList.length} Pasien Terdaftar
+                                            </span>
+                                        </div>
+                                    ) : filteredPatientsList.length === 0 ? (
+                                        <div className="search-status-message no-results">
+                                            <p>
+                                                Tidak ditemukan pasien dengan {searchMethod === 'name' ? 'nama' : 'nomor rekam medis'}{' '}
+                                                "<strong>{activeKeyword}</strong>".
+                                            </p>
+                                            <p className="search-hint-text" style={{ textAlign: 'center' }}>
+                                                Pastikan ejaan nama atau nomor rekam medis sudah sesuai.
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <div className="search-result-count-bar">
+                                                <span>
+                                                    Ditemukan <strong>{filteredPatientsList.length}</strong> pasien
+                                                </span>
+                                            </div>
+                                            <div className="search-patient-cards-list">
+                                                {filteredPatientsList.map((p) => (
+                                                    <div key={p.id} className="modern-patient-card">
+                                                        <div className="patient-card-header">
+                                                            <span className="patient-name-title">{p.name || 'Tanpa Nama'}</span>
+                                                            {p.mrn && (
+                                                                <span className="patient-mrn-tag">RM: {p.mrn}</span>
+                                                            )}
+                                                        </div>
+                                                        <div className="patient-card-details">
+                                                            {p.birthDate && (
+                                                                <span className="patient-detail-chip">
+                                                                    Lahir: {p.birthDate}
+                                                                </span>
+                                                            )}
+                                                            {p.identifier && (
+                                                                <span className="patient-detail-chip">
+                                                                    NIK: {p.identifier}
+                                                                </span>
+                                                            )}
+                                                            {p.address && (
+                                                                <span className="patient-detail-chip">
+                                                                    Alamat: {p.address}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-open-emr"
+                                                            onClick={() => {
+                                                                closeModal();
+                                                                navigate(`/emr/${p.id}`);
+                                                            }}
+                                                        >
+                                                            Buka Rekam Medis (EMR) →
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>
